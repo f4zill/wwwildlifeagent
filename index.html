@@ -2,226 +2,173 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>India Wildlife Habitat Map</title>
-
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="libs/leaflet.css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cruselia</title>
     <style>
         body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #eef2f3;
-}
+            margin: 0;
+            font-family: Poppins, sans-serif;
+            background: #eef2f3;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-#container {
-    display: flex;
-    height: 100vh;
-}
+        nav {
+            width: 100%;
+            background: #0d1b2a;
+            padding: 12px 0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-nav {
-    width: 100%;
-    background: #0d1b2a;
-    padding: 12px 0;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            padding: 0;
+            margin: 0;
+        }
 
-nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    padding: 0;
-    margin: 0;
-}
+        nav ul li a {
+            text-decoration: none;
+            color: #e0e1dd;
+            font-size: 16px;
+            padding: 8px 14px;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: background 0.25s ease, transform 0.15s ease;
+        }
 
-nav ul li {
-    display: inline-block;
-}
+        nav ul li a:hover {
+            background: #1b263b;
+            transform: scale(1.05);
+        }
 
-nav ul li a {
-    text-decoration: none;
-    color: #e0e1dd;
-    font-size: 16px;
-    font-weight: 600;
-    padding: 8px 14px;
-    border-radius: 6px;
-    transition: background 0.25s ease, transform 0.15s ease;
-}
+        #home-container {
+            max-width: 900px;
+            padding: 30px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+            text-align: center;
+            flex: 1;
+        }
 
-nav ul li a:hover {
-    background: #1b263b;
-    color: white;
-    transform: scale(1.05);
-}
+        h1 {
+            margin-bottom: 10px;
+            font-size: 32px;
+            color: #2b4b82;
+        }
 
-#sidebar {
-    width: 340px;
-    overflow-y: auto;
-    background: white;
-    padding: 20px;
-    border-right: 2px solid #ddd;
-}
+        p {
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
 
-#sidebar h2 {
-    margin-top: 0;
-    text-align: center;
-    font-size: 20px;
-    color: #333;
-}
+        .section-title {
+            font-size: 20px;
+            margin-top: 20px;
+            margin-bottom: 8px;
+            color: #1b263b;
+            font-weight: bold;
+        }
 
-#speciesList {
-    padding-left: 0;
-    list-style: none;
-}
+        ul {
+            margin-top: 5px;
+            padding-left: 22px;
+            text-align: left;
+            display: inline-block;
+        }
 
-.species-item {
-    padding: 12px;
-    margin-bottom: 10px;
-    border-radius: 6px;
-    cursor: pointer;
-    border-left: 5px solid transparent;
-    background: #fafafa;
-    transition: background 0.2s ease, transform 0.1s ease;
-}
+        li {
+            margin-bottom: 6px;
+            color: #333;
+        }
 
-.species-item:hover {
-    background: #e8f4ff;
-    transform: scale(1.01);
-    border-left: 5px solid #4da3ff;
-}
+        #footer {
+            background: #0d1b2a;
+            color: #e0e1dd;
+            text-align: center;
+            padding: 14px 10px;
+            font-size: 14px;
+        }
 
-#map {
-    flex: 1;
-}
+        #footer a {
+            color: #4da3ff;
+            text-decoration: none;
+            font-weight: bold;
+        }
 
-.leaflet-container {
-    background: #cfe0e8;
-}
+        #footer a:hover {
+            text-decoration: underline;
+        }
 
+        @media (max-width: 600px) {
+            #home-container {
+                padding: 20px;
+                margin: 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
-
 <body>
+
 <nav>
     <ul>
         <li><a href="index.html">home</a></li>
         <li><a href="upload.html">identify</a></li>
-        <li><a href="about.html">about</a></li>
+        <li><a href="enci.html">encyclopedia</a></li>
+        <li><a href="map.html">map</a></li>
     </ul>
 </nav>
-<div id="container">
 
-    <!-- Sidebar -->
-    <div id="sidebar">
-        <h2>Wildlife Species (India)</h2>
-        <ul id="speciesList"></ul>
-    </div>
+<div id="home-container">
+    <h1>Welcome to Cruselia</h1>
 
-    <!-- Map -->
-    <div id="map"></div>
+    <p>
+        Cruselia is an AI-powered wildlife monitoring tool designed to assist forest officials,
+        researchers, and conservationists. It provides real-time insights into animal populations and
+        conservation status across different regions.
+    </p>
 
+    <p>
+        Instead of relying solely on traditional censuses, officials can use Cruselia to track sightings,
+        record locations, and monitor trends efficiently.
+    </p>
+
+    <p>
+        The platform helps keep track of endangered, vulnerable, and common species,
+        enabling informed decisions for wildlife protection and habitat management.
+    </p>
+
+    <div class="section-title">Key Benefits</div>
+    <ul>
+        <li>Monitor animal populations and conservation status</li>
+        <li>Record and track wildlife sightings easily</li>
+        <li>Reduce time-consuming census operations</li>
+        <li>Support data-driven wildlife management decisions</li>
+    </ul>
 </div>
 
-<!-- Leaflet JS -->
-<script src="libs/leaflet.js"></script>
-
-<script>
-    // ----------------------
-// Initialize Map
-// ----------------------
-let map = L.map("map").setView([22.5, 79], 5);
-
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 18,
-}).addTo(map);
-
-let currentLayer = null;
-
-
-// ----------------------
-// Load Species List
-// ----------------------
-fetch("data/species.json")
-    .then(res => res.json())
-    .then(data => {
-        const list = document.getElementById("speciesList");
-        list.innerHTML = "";
-
-        data.animals.forEach(animal => {
-            const item = document.createElement("li");
-            item.classList.add("species-item");
-
-            // Show species name
-            item.textContent = animal.species_name;
-
-            // Hover → highlight habitat
-            item.addEventListener("mouseenter", () => {
-                highlightRegion(animal.habitat);
-            });
-
-            // Stop hover → reset map
-            item.addEventListener("mouseleave", resetMap);
-
-            list.appendChild(item);
-        });
-    })
-    .catch(err => console.error("❌ Error loading species JSON:", err));
-
-
-// ----------------------
-// Highlight Region
-// ----------------------
-function highlightRegion(habitat) {
-    if (!habitat) {
-        console.error("❌ No habitat provided for species");
-        return;
-    }
-
-    // Load the correct geojson file
-    fetch(`geojson/${habitat}.geojson`)
-        .then(res => {
-            if (!res.ok) throw new Error("GeoJSON not found");
-            return res.json();
-        })
-        .then(geo => {
-
-            // Remove previous highlight
-            if (currentLayer) map.removeLayer(currentLayer);
-
-            // Create new region highlight layer
-            currentLayer = L.geoJSON(geo, {
-                style: {
-                    color: "#ff3333",
-                    weight: 3,
-                    fillColor: "#ff9999",
-                    fillOpacity: 0.5
-                }
-            }).addTo(map);
-
-            // Zoom to selected region
-            map.fitBounds(currentLayer.getBounds());
-        })
-        .catch(err => {
-            console.error(`❌ Error loading habitat: ${habitat}`, err);
-        });
-}
-
-
-// ----------------------
-// Reset Map
-// ----------------------
-function resetMap() {
-    if (currentLayer) {
-        map.removeLayer(currentLayer);
-        currentLayer = null;
-    }
-}
-
-</script>
+<div id="footer">
+    Contact: <a href="mailto:hello@cruselia.com">hello@cruselia.com</a> | &copy; 2025 Cruselia. All rights reserved.
+</div>
 
 </body>
 </html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Species Details</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Poppins, sans-serif;
+            background: #f4f6f9;
+        }
+
+        nav {
+            width: 100%;
+            background: #0d1b2a;
+            padding: 12px 0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #e0e1dd;
+            font-size: 16px;
+            padding: 8px 14px;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: background 0.25s ease, transform 0.15s ease;
+        }
+
+        nav ul li a:hover {
+            background: #1b263b;
+            transform: scale(1.05);
+        }
+
+        #species-container {
+            max-width: 800px;
+            margin: 30px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 14px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        #species-container img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            background: #ddd;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            font-size: 28px;
+            text-align: center;
+            color: #2b4b82;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+
+        .status.Least\ Concern { color: #2ecc71; }
+        .status.Vulnerable { color: #f1c40f; }
+        .status.Endangered { color: #e67e22; }
+        .status.Critically\ Endangered { color: #e74c3c; }
+
+        #backButton {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #2b4b82;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        #backButton:hover {
+            background: #1b3560;
+        }
+
+        @media (max-width: 600px) {
+            #species-container {
+                padding: 15px;
+                margin: 15px;
+            }
+
+            #species-container img {
+                height: 180px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+
+            #backButton {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <ul>
+        <li><a href="index.html">home</a></li>
+        <li><a href="upload.html">identify</a></li>
+        <li><a href="about.html">about</a></li>
+        <li><a href="encyclopedia.html">encyclopedia</a></li>
+    </ul>
+</nav>
+
+<div id="species-container">
+    <h1>Loading...</h1>
+</div>
+
+<script>
+    // Get the species name from URL
+    const params = new URLSearchParams(window.location.search);
+    const speciesName = params.get("name");
+
+    const container = document.getElementById("species-container");
+
+    async function loadSpecies() {
+        try {
+            const res = await fetch("../data/species.json");
+            const species = await res.json();
+
+            const animal = species.find(a => a.name === speciesName);
+
+            if (!animal) {
+                container.innerHTML = "<h1>Species Not Found</h1>";
+                return;
+            }
+
+            const imgName = animal.name
+                .toLowerCase()
+                .replace(/\s+/g, "_")
+                .replace(/[()\-]/g, "")
+                .replace(/__+/g, "_") + ".jpg";
+
+            const imgPath = `../assets/animals/${imgName}`;
+
+            container.innerHTML = `
+                <img src="${imgPath}" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
+                <h1>${animal.name}</h1>
+                <p><strong>Scientific Name:</strong> ${animal.scientific_name}</p>
+                <p><strong>Habitat:</strong> ${animal.habitat.replace(/_/g, " ")}</p>
+                <p class="status ${animal.status}"><strong>Status:</strong> ${animal.status}</p>
+                <button id="backButton">← Back to Encyclopedia</button>
+            `;
+
+            // Back button click
+            document.getElementById("backButton").onclick = () => {
+                window.history.back();
+            };
+
+        } catch (err) {
+            console.error("Error loading species:", err);
+            container.innerHTML = "<h1>Error loading species data</h1>";
+        }
+    }
+
+    loadSpecies();
+</script>
+
+</body>
+</html>

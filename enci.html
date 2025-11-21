@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wildlife Encyclopedia</title>
+</head>
+
+<style>
+    body {
+        font-family: Poppins, sans-serif;
+        margin: 0;
+        background: #f4f6f9;
+    }
+
+    header {
+        text-align: center;
+        background: #2b4b82;
+        color: white;
+        padding: 30px 20px;
+        margin-bottom: 10px;
+    }
+
+    .filters {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+        padding: 15px;
+        background: #e9edf3;
+    }
+
+    .filters input,
+    .filters select {
+        padding: 10px 14px;
+        font-size: 15px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        outline: none;
+        flex: 1 1 200px; /* responsive width */
+        min-width: 120px;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .card {
+        background: white;
+        border-radius: 14px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        padding: 15px;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+    .card:hover {
+        transform: scale(1.03);
+    }
+
+    .card img {
+        width: 100%;
+        height: 180px;
+        border-radius: 12px;
+        object-fit: cover;
+        background: #ddd;
+    }
+
+    .card h3 {
+        margin: 10px 0 5px;
+        font-size: 20px;
+        color: #333;
+    }
+
+    .card p {
+        margin: 4px 0;
+        font-size: 14px;
+    }
+
+    .status {
+        font-weight: bold;
+    }
+
+    .status.Least\ Concern { color: #2ecc71; }
+    .status.Vulnerable { color: #f1c40f; }
+    .status.Endangered { color: #e67e22; }
+    .status.Critically\ Endangered { color: #e74c3c; }
+
+    nav {
+        width: 100%;
+        background: #0d1b2a;
+        padding: 12px 0;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 0;
+        margin: 0;
+    }
+
+    nav ul li a {
+        text-decoration: none;
+        color: #e0e1dd;
+        font-size: 16px;
+        padding: 8px 14px;
+        font-weight: 600;
+        border-radius: 6px;
+        transition: background 0.25s ease, transform 0.15s ease;
+    }
+
+    nav ul li a:hover {
+        background: #1b263b;
+        transform: scale(1.05);
+    }
+
+    /* ----------------- MOBILE RESPONSIVE ----------------- */
+    @media (max-width: 768px) {
+        header {
+            padding: 20px 15px;
+        }
+
+        .filters {
+            gap: 10px;
+            padding: 12px;
+        }
+
+        .filters input,
+        .filters select {
+            font-size: 14px;
+        }
+
+        nav ul li a {
+            font-size: 14px;
+            padding: 6px 10px;
+        }
+
+        .grid {
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            padding: 15px;
+        }
+
+        .card img {
+            height: 150px;
+        }
+
+        .card h3 {
+            font-size: 18px;
+        }
+
+        .card p {
+            font-size: 13px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .grid {
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .filters {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .filters input,
+        .filters select {
+            width: 100%;
+        }
+
+        .card img {
+            height: 130px;
+        }
+
+        .card h3 {
+            font-size: 16px;
+        }
+
+        .card p {
+            font-size: 12px;
+        }
+
+        nav ul {
+            gap: 10px;
+        }
+    }
+</style>
+
+<body>
+
+<nav>
+    <ul>
+        <li><a href="index.html">home</a></li>
+        <li><a href="upload.html">identify</a></li>
+        <li><a href="enci.html">encyclopedia</a></li>
+        <li><a href="map.html">map</a></li>
+    </ul>
+</nav>
+
+    <header>
+        <h1>Wildlife Encyclopedia</h1>
+        <p>Learn about India's diverse animal species</p>
+    </header>
+
+    <div class="filters">
+        <input type="text" id="searchBar" placeholder="Search species...">
+        <select id="statusFilter">
+            <option value="all">All Status</option>
+            <option value="Least Concern">Least Concern</option>
+            <option value="Vulnerable">Vulnerable</option>
+            <option value="Endangered">Endangered</option>
+            <option value="Critically Endangered">Critically Endangered</option>
+        </select>
+    </div>
+
+    <div id="species-container" class="grid"></div>
+
+    <script>
+        let allSpecies = [];
+        const container = document.getElementById("species-container");
+
+        async function loadSpecies() {
+            try {
+                const res = await fetch("../data/species.json");
+                allSpecies = await res.json();
+                displaySpecies(allSpecies);
+            } catch (err) {
+                console.error("Error loading species:", err);
+            }
+        }
+
+        function displaySpecies(list) {
+            container.innerHTML = "";
+
+            list.forEach(animal => {
+                const card = document.createElement("div");
+                card.className = "card";
+                card.onclick = () => openDetails(animal.name);
+
+                const imgName = animal.name
+                    .toLowerCase()
+                    .replace(/\s+/g, "_")
+                    .replace(/[()\-]/g, "")
+                    .replace(/__+/g, "_") + ".jpg";
+
+                const imgPath = `../assets/animals/${imgName}`;
+
+                card.innerHTML = `
+                    <img src="${imgPath}" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
+                    <h3>${animal.name}</h3>
+                    <p><strong>Scientific Name:</strong> ${animal.scientific_name}</p>
+                    <p><strong>Habitat:</strong> ${animal.habitat.replace(/_/g, " ")}</p>
+                    <p class="status ${animal.status}">
+                        <strong>Status:</strong> ${animal.status}
+                    </p>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        function applyFilters() {
+            const search = document.getElementById("searchBar").value.toLowerCase();
+            const status = document.getElementById("statusFilter").value;
+
+            const filtered = allSpecies.filter(a => {
+                const matchesSearch = a.name.toLowerCase().includes(search);
+                const matchesStatus = status === "all" || a.status === status;
+                return matchesSearch && matchesStatus;
+            });
+
+            displaySpecies(filtered);
+        }
+
+        document.getElementById("searchBar").oninput = applyFilters;
+        document.getElementById("statusFilter").onchange = applyFilters;
+
+        function openDetails(name) {
+            window.location.href = `species.html?name=${encodeURIComponent(name)}`;
+        }
+
+        loadSpecies();
+    </script>
+
+</body>
+</html>
