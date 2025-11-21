@@ -130,6 +130,49 @@
             margin: 6px 0;
         }
 
+        /* Counter section */
+        #species-counter {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+        }
+
+        #species-counter h2 {
+            color: #2b4b82;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .counter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+        }
+
+        .counter-card {
+            background: #f9fafe;
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .counter-card h4 {
+            margin: 6px 0;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .counter-card span {
+            display: block;
+            font-size: 18px;
+            font-weight: bold;
+            color: #2b4b82;
+        }
+
         @media (max-width: 600px) {
             #upload-container {
                 padding: 25px 20px;
@@ -171,7 +214,39 @@
     <div id="result"></div>
 </div>
 
+<div id="species-counter">
+    <h2>Species Upload Counts</h2>
+    <div class="counter-grid" id="counterGrid"></div>
+</div>
+
 <script>
+let speciesCounts = {}; // Holds counts per species
+let speciesList = [];   // Holds all species names
+
+// Load species list from JSON to initialize counters
+fetch("../data/species.json")
+    .then(res => res.json())
+    .then(data => {
+        speciesList = data.map(a => a.name);
+        speciesList.forEach(name => speciesCounts[name] = 0);
+        renderCounters();
+    })
+    .catch(err => console.error("Error loading species:", err));
+
+function renderCounters() {
+    const grid = document.getElementById("counterGrid");
+    grid.innerHTML = "";
+    speciesList.forEach(name => {
+        const card = document.createElement("div");
+        card.className = "counter-card";
+        card.innerHTML = `
+            <h4>${name}</h4>
+            <span id="count-${name.replace(/\s+/g,'_')}">${speciesCounts[name]}</span>
+        `;
+        grid.appendChild(card);
+    });
+}
+
 async function uploadImage() {
     const input = document.getElementById("imageInput");
     const file = input.files[0];
@@ -188,6 +263,7 @@ async function uploadImage() {
         const res = await fetch("/identify", { method: "POST", body: formData });
         const data = await res.json();
 
+        // Display result
         const resultDiv = document.getElementById("result");
         resultDiv.innerHTML = `
             <img src="${URL.createObjectURL(file)}">
@@ -196,6 +272,12 @@ async function uploadImage() {
             <p><strong>Status:</strong> ${data.status}</p>
             <p><strong>Uploaded Count:</strong> ${data.upload_count}</p>
         `;
+
+        // Update counter
+        if (speciesCounts[data.name] !== undefined) {
+            speciesCounts[data.name]++;
+            document.getElementById(`count-${data.name.replace(/\s+/g,'_')}`).innerText = speciesCounts[data.name];
+        }
     } catch (err) {
         console.error("Error identifying image:", err);
         alert("Something went wrong. Please try again.");
