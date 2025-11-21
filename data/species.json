@@ -1,67 +1,104 @@
-{
-  "animals": [
-    { "species_name": "Asiatic Elephant", "scientific_name": "Elephas maximus indicus", "status": "Vulnerable", "habitat": "northeast_forests" },
-    { "species_name": "Snow Leopard", "scientific_name": "Panthera uncia", "status": "Vulnerable", "habitat": "himalayas" },
-    { "species_name": "Indian One-Horned Rhinoceros", "scientific_name": "Rhinoceros unicornis", "status": "Vulnerable", "habitat": "gangetic_plain" },
-    { "species_name": "Gangetic River Dolphin", "scientific_name": "Platanista gangetica", "status": "Vulnerable", "habitat": "gangetic_plain" },
-    { "species_name": "Red Panda", "scientific_name": "Ailurus fulgens", "status": "Vulnerable", "habitat": "himalayas" },
-    { "species_name": "Indian Wolf", "scientific_name": "Canis lupus pallipes", "status": "Vulnerable", "habitat": "central_india_forests" },
-    { "species_name": "Indian Bison (Gaur)", "scientific_name": "Bos gaurus", "status": "Vulnerable", "habitat": "western_ghats" },
-    { "species_name": "Barasingha (Swamp Deer)", "scientific_name": "Rucervus duvaucelii", "status": "Vulnerable", "habitat": "central_india_forests" },
-    { "species_name": "Blackbuck", "scientific_name": "Antilope cervicapra", "status": "Vulnerable", "habitat": "thar_desert" },
-    { "species_name": "Nilgiri Tahr", "scientific_name": "Nilgiritragus hylocrius", "status": "Vulnerable", "habitat": "western_ghats" },
-    { "species_name": "Leopard Cat", "scientific_name": "Prionailurus bengalensis", "status": "Vulnerable", "habitat": "northeast_forests" },
-    { "species_name": "Olive Ridley Sea Turtle", "scientific_name": "Lepidochelys olivacea", "status": "Vulnerable", "habitat": "coastal_india" },
-    { "species_name": "Lion-tailed Macaque", "scientific_name": "Macaca silenus", "status": "Vulnerable", "habitat": "western_ghats" },
-    { "species_name": "Common Leopard", "scientific_name": "Panthera pardus", "status": "Vulnerable", "habitat": "central_india_forests" },
-    { "species_name": "Sloth Bear", "scientific_name": "Melursus ursinus", "status": "Vulnerable", "habitat": "central_india_forests" },
-
-    { "species_name": "Indian Peafowl", "scientific_name": "Pavo cristatus", "status": "Least Concern", "habitat": "gangetic_plain" },
-    { "species_name": "Rhesus Macaque", "scientific_name": "Macaca mulatta", "status": "Least Concern", "habitat": "gangetic_plain" },
-    { "species_name": "Five-striped Palm Squirrel", "scientific_name": "Funambulus pennantii", "status": "Least Concern", "habitat": "central_india_forests" },
-    { "species_name": "Golden Jackal", "scientific_name": "Canis aureus", "status": "Least Concern", "habitat": "gangetic_plain" },
-    { "species_name": "Indian Flying Fox", "scientific_name": "Pteropus giganteus", "status": "Least Concern", "habitat": "eastern_ghats" },
-    { "species_name": "Indian Hare", "scientific_name": "Lepus nigricollis", "status": "Least Concern", "habitat": "central_india_forests" },
-    { "species_name": "Wild Boar", "scientific_name": "Sus scrofa", "status": "Least Concern", "habitat": "central_india_forests" },
-    { "species_name": "Small Indian Civet", "scientific_name": "Viverricula indica", "status": "Least Concern", "habitat": "western_ghats" },
-    { "species_name": "Indian Grey Mongoose", "scientific_name": "Herpestes edwardsii", "status": "Least Concern", "habitat": "thar_desert" },
-    { "species_name": "Indian Cobra", "scientific_name": "Naja naja", "status": "Least Concern", "habitat": "gangetic_plain" },
-    { "species_name": "House Sparrow", "scientific_name": "Passer domesticus", "status": "Least Concern", "habitat": "gangetic_plain" },
-    { "species_name": "Indian Robin", "scientific_name": "Copsychus fulicatus", "status": "Least Concern", "habitat": "central_india_forests" },
-    { "species_name": "Asian Koel", "scientific_name": "Eudynamys scolopaceus", "status": "Least Concern", "habitat": "eastern_ghats" },
-    { "species_name": "Common Myna", "scientific_name": "Acridotheres tristis", "status": "Least Concern", "habitat": "gangetic_plain" },
-    { "species_name": "Jungle Cat", "scientific_name": "Felis chaus", "status": "Least Concern", "habitat": "sundarbans" },
-
-    { "species_name": "Kashmir Stag (Hangul)", "scientific_name": "Cervus hanglu hanglu", "status": "Critically Endangered", "habitat": "himalayas" },
-    { "species_name": "Asiatic Cheetah", "scientific_name": "Acinonyx jubatus venaticus", "status": "Critically Endangered", "habitat": "thar_desert" },
-    { "species_name": "Great Indian Bustard", "scientific_name": "Ardeotis nigriceps", "status": "Critically Endangered", "habitat": "thar_desert" },
-    { "species_name": "Forest Owlet", "scientific_name": "Athene blewitti", "status": "Critically Endangered", "habitat": "central_india_forests" },
-    { "species_name": "Javan Rhinoceros", "scientific_name": "Rhinoceros sondaicus", "status": "Critically Endangered", "habitat": "northeast_forests" },
-    { "species_name": "Sumatran Rhinoceros", "scientific_name": "Dicerorhinus sumatrensis", "status": "Critically Endangered", "habitat": "northeast_forests" },
-    { "species_name": "Spoon-billed Sandpiper", "scientific_name": "Calidris pygmaea", "status": "Critically Endangered", "habitat": "coastal_india" },
-    { "species_name": "Himalayan Quail", "scientific_name": "Ophrysia superciliosa", "status": "Critically Endangered", "habitat": "himalayas" },
-    { "species_name": "White-bellied Heron", "scientific_name": "Ardea insignis", "status": "Critically Endangered", "habitat": "northeast_forests" },
-    { "species_name": "Malabar Civet", "scientific_name": "Viverra civettina", "status": "Critically Endangered", "habitat": "western_ghats" },
-    { "species_name": "Pygmy Hog", "scientific_name": "Porcula salvania", "status": "Critically Endangered", "habitat": "northeast_forests" },
-    { "species_name": "Gharial", "scientific_name": "Gavialis gangeticus", "status": "Critically Endangered", "habitat": "gangetic_plain" },
-    { "species_name": "Namdapha Flying Squirrel", "scientific_name": "Biswamoyopterus biswasi", "status": "Critically Endangered", "habitat": "northeast_forests" },
-    { "species_name": "Red-headed Vulture", "scientific_name": "Sarcogyps calvus", "status": "Critically Endangered", "habitat": "central_india_forests" },
-    { "species_name": "Chinese Pangolin", "scientific_name": "Manis pentadactyla", "status": "Critically Endangered", "habitat": "northeast_forests" },
-
-    { "species_name": "Bengal Tiger", "scientific_name": "Panthera tigris tigris", "status": "Endangered", "habitat": "sundarbans" },
-    { "species_name": "Asiatic Lion", "scientific_name": "Panthera leo persica", "status": "Endangered", "habitat": "central_india_forests" },
-    { "species_name": "Black Softshell Turtle", "scientific_name": "Nilssonia nigricans", "status": "Endangered", "habitat": "northeast_forests" },
-    { "species_name": "Fishing Cat", "scientific_name": "Prionailurus viverrinus", "status": "Endangered", "habitat": "sundarbans" },
-    { "species_name": "Red Panda", "scientific_name": "Ailurus fulgens", "status": "Endangered", "habitat": "himalayas" },
-    { "species_name": "Hoolock Gibbon", "scientific_name": "Hoolock hoolock", "status": "Endangered", "habitat": "northeast_forests" },
-    { "species_name": "Blue Whale", "scientific_name": "Balaenoptera musculus", "status": "Endangered", "habitat": "coastal_india" },
-    { "species_name": "Ganges River Dolphin", "scientific_name": "Platanista gangetica", "status": "Endangered", "habitat": "gangetic_plain" },
-    { "species_name": "Dhole (Indian Wild Dog)", "scientific_name": "Cuon alpinus", "status": "Endangered", "habitat": "western_ghats" },
-    { "species_name": "Snow Leopard", "scientific_name": "Panthera uncia", "status": "Endangered", "habitat": "trans_himalayas" },
-    { "species_name": "Nilgiri Langur", "scientific_name": "Semnopithecus johnii", "status": "Endangered", "habitat": "western_ghats" },
-    { "species_name": "Indian Rhinoceros", "scientific_name": "Rhinoceros unicornis", "status": "Endangered", "habitat": "gangetic_plain" },
-    { "species_name": "Lion-tailed Macaque", "scientific_name": "Macaca silenus", "status": "Endangered", "habitat": "western_ghats" },
-    { "species_name": "Smooth-coated Otter", "scientific_name": "Lutrogale perspicillata", "status": "Endangered", "habitat": "coastal_india" },
-    { "species_name": "White-rumped Vulture", "scientific_name": "Gyps bengalensis", "status": "Endangered", "habitat": "gangetic_plain" }
-  ]
-}
+[
+  {
+    "name": "Antelope (Blackbuck)",
+    "scientific_name": "Antilope cervicapra",
+    "habitat": "thar_desert",
+    "status": "Least Concern"
+  },
+  {
+    "name": "Buffalo (Wild Water Buffalo)",
+    "scientific_name": "Bubalus arnee",
+    "habitat": "northeast_forests",
+    "status": "Endangered"
+  },
+  {
+    "name": "Cow (Domestic)",
+    "scientific_name": "Bos taurus / Bos indicus",
+    "habitat": "gangetic_ghats",
+    "status": "Least Concern"
+  },
+  {
+    "name": "Deer (Spotted Deer / Chital)",
+    "scientific_name": "Axis axis",
+    "habitat": "central_india_forests",
+    "status": "Least Concern"
+  },
+  {
+    "name": "Elephant (Asian Elephant)",
+    "scientific_name": "Elephas maximus",
+    "habitat": "northeast_forests",
+    "status": "Endangered"
+  },
+  {
+    "name": "Leopard (Indian Leopard)",
+    "scientific_name": "Panthera pardus fusca",
+    "habitat": "western_ghats",
+    "status": "Vulnerable"
+  },
+  {
+    "name": "Lion (Asiatic Lion)",
+    "scientific_name": "Panthera leo persica",
+    "habitat": "thar_desert",
+    "status": "Endangered"
+  },
+  {
+    "name": "Mole (Indian Mole)",
+    "scientific_name": "Talpa micrura",
+    "habitat": "himalayas",
+    "status": "Least Concern"
+  },
+  {
+    "name": "Mouse (House Mouse)",
+    "scientific_name": "Mus musculus",
+    "habitat": "gangetic_ghats",
+    "status": "Least Concern"
+  },
+  {
+    "name": "Otter (Smooth-coated Otter)",
+    "scientific_name": "Lutrogale perspicillata",
+    "habitat": "coastal_india",
+    "status": "Vulnerable"
+  },
+  {
+    "name": "Ox (Domestic Ox)",
+    "scientific_name": "Bos indicus",
+    "habitat": "central_india_forests",
+    "status": "Least Concern"
+  },
+  {
+    "name": "Panther (Black Panther – Melanistic Leopard)",
+    "scientific_name": "Panthera pardus fusca (melanistic)",
+    "habitat": "western_ghats",
+    "status": "Vulnerable"
+  },
+  {
+    "name": "Pig (Wild Boar)",
+    "scientific_name": "Sus scrofa",
+    "habitat": "eastern_ghats",
+    "status": "Least Concern"
+  },
+  {
+    "name": "Rat (Indian Bush Rat)",
+    "scientific_name": "Golunda ellioti",
+    "habitat": "central_india_forests",
+    "status": "Least Concern"
+  },
+  {
+    "name": "Rhino (Indian One-Horned Rhinoceros)",
+    "scientific_name": "Rhinoceros unicornis",
+    "habitat": "northeast_forests",
+    "status": "Vulnerable"
+  },
+  {
+    "name": "Tiger (Bengal Tiger)",
+    "scientific_name": "Panthera tigris tigris",
+    "habitat": "sundarbans",
+    "status": "Endangered"
+  },
+  {
+    "name": "Wolf (Indian Wolf)",
+    "scientific_name": "Canis lupus pallipes",
+    "habitat": "thar_desert",
+    "status": "Endangered"
+  }
+]
