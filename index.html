@@ -73,6 +73,25 @@
             font-size: 16px;
         }
 
+        .get-started-btn {
+            display: inline-block;
+            margin: 15px 0 25px 0;
+            padding: 12px 28px;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            background: #2b4b82;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background 0.3s ease, transform 0.15s ease;
+        }
+
+        .get-started-btn:hover {
+            background: #1d3560;
+            transform: scale(1.05);
+        }
+
         .section-title {
             font-size: 20px;
             margin-top: 20px;
@@ -124,6 +143,11 @@
             p {
                 font-size: 14px;
             }
+
+            .get-started-btn {
+                padding: 10px 22px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
@@ -131,7 +155,7 @@
 
 <nav>
     <ul>
-        <li><a href="index.html">home</a></li>
+        <li><a href="home.html">home</a></li>
         <li><a href="upload.html">identify</a></li>
         <li><a href="enci.html">encyclopedia</a></li>
         <li><a href="map.html">map</a></li>
@@ -146,6 +170,9 @@
         researchers, and conservationists. It provides real-time insights into animal populations and
         conservation status across different regions.
     </p>
+
+    <!-- Get Started Button -->
+    <a href="upload.html" class="get-started-btn">Get Started</a>
 
     <p>
         Instead of relying solely on traditional censuses, officials can use Cruselia to track sightings,
