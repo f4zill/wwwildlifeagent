@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>agent</title>
 
-    <!-- Leaflet CSS -->
     <link rel="stylesheet" href="libs/leaflet.css">
 
     <style>
@@ -14,7 +13,6 @@
             background: #eef2f3;
         }
 
-        /* ---------- NAVBAR ---------- */
         nav {
             width: 100%;
             background: #0d1b2a;
@@ -34,10 +32,6 @@
             margin: 0;
         }
 
-        nav ul li {
-            display: inline-block;
-        }
-
         nav ul li a {
             text-decoration: none;
             color: #e0e1dd;
@@ -54,28 +48,18 @@
             transform: scale(1.05);
         }
 
-        /* ---------- LAYOUT ---------- */
         #container {
             display: flex;
             height: calc(100vh - 60px);
             overflow: hidden;
         }
 
-        /* ---------- SIDEBAR ---------- */
         #sidebar {
             width: 340px;
             overflow-y: auto;
             background: white;
             padding: 20px;
             border-right: 2px solid #ddd;
-            transition: transform 0.4s ease;
-        }
-
-        #sidebar h2 {
-            margin-top: 0;
-            text-align: center;
-            font-size: 20px;
-            color: #333;
         }
 
         #speciesList {
@@ -88,105 +72,51 @@
             margin-bottom: 10px;
             border-radius: 6px;
             cursor: pointer;
-            border-left: 5px solid transparent;
             background: #fafafa;
-            transition: background 0.2s ease, transform 0.1s ease;
+            border-left: 5px solid transparent;
+            transition: 0.2s ease;
         }
 
         .species-item:hover {
             background: #e8f4ff;
-            transform: scale(1.01);
             border-left: 5px solid #4da3ff;
+            transform: scale(1.01);
         }
 
-        /* ---------- MAP ---------- */
-        #map {
-            flex: 1;
-        }
+        #map { flex: 1; }
 
         .leaflet-container {
             background: #cfe0e8;
         }
 
-
-        /* =====================================================
-           ★★★ RESPONSIVE STYLES ★★★
-        ===================================================== */
-
-        /* ---------- Tablet (<= 900px) ---------- */
-        @media (max-width: 900px) {
-            #container {
-                flex-direction: column;
-                height: auto;
-            }
-
-            #map {
-                height: 60vh;
-            }
-
-            #sidebar {
-                width: 100%;
-                height: 40vh;
-                border-right: none;
-                border-bottom: 2px solid #ddd;
-            }
-
-            nav ul {
-                gap: 20px;
-            }
-        }
-
-        /* ---------- Mobile (<= 600px) ---------- */
         @media (max-width: 600px) {
+            #container { flex-direction: column; }
 
-            /* Smaller navbar */
-            nav ul {
-                flex-wrap: wrap;
-                gap: 10px;
-            }
-
-            nav ul li a {
-                font-size: 14px;
-                padding: 6px 10px;
-            }
-
-            #container {
-                flex-direction: column;
-            }
-
-            /* Sidebar collapses */
             #sidebar {
                 width: 100%;
                 max-height: 0;
                 overflow: hidden;
                 padding: 0 20px;
-                transform: translateY(-10px);
+                transition: 0.4s ease;
             }
 
             #sidebar.open {
                 max-height: 300px;
                 padding: 20px;
-                transform: translateY(0);
             }
 
-            /* Toggle button for mobile */
             #toggleSidebar {
                 width: 100%;
                 background: #0d1b2a;
                 color: white;
                 padding: 12px;
-                font-size: 16px;
                 border: none;
-                cursor: pointer;
             }
 
-            #map {
-                height: 70vh;
-            }
+            #map { height: 70vh; }
         }
     </style>
 </head>
-
 <body>
 
 <nav>
@@ -198,28 +128,24 @@
     </ul>
 </nav>
 
-<!-- MOBILE SIDEBAR TOGGLE BUTTON -->
 <button id="toggleSidebar" style="display:none;">Show Species List</button>
 
 <div id="container">
 
-    <!-- Sidebar -->
     <div id="sidebar">
         <h2>Wildlife Species (India)</h2>
         <ul id="speciesList"></ul>
     </div>
 
-    <!-- Map -->
     <div id="map"></div>
-
 </div>
 
-<!-- Leaflet JS -->
+
 <script src="libs/leaflet.js"></script>
 <script>
-/* ----------------------
-   Sidebar Toggle (Mobile)
-   ---------------------- */
+/* -----------------------------------------------
+   MOBILE SIDEBAR
+-------------------------------------------------- */
 const sidebar = document.getElementById("sidebar");
 const toggleBtn = document.getElementById("toggleSidebar");
 
@@ -241,73 +167,83 @@ toggleBtn.onclick = () => {
         : "Show Species List";
 };
 
-
-/* ----------------------
-   Initialize Map
-   ---------------------- */
+/* -----------------------------------------------
+   MAP INITIALIZATION
+-------------------------------------------------- */
 let map = L.map("map").setView([22.5, 79], 5);
 
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 18,
-}).addTo(map);
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
 
 let currentLayer = null;
 
-
-/* ----------------------
-   Load Species List
-   ---------------------- */
-fetch("data/species.json")
+/* -----------------------------------------------
+   LOAD SPECIES LIST
+-------------------------------------------------- */
+fetch("static/data/species.json")
     .then(res => res.json())
     .then(data => {
         const list = document.getElementById("speciesList");
-        list.innerHTML = "";
 
         data.forEach(animal => {
-            const item = document.createElement("li");
-            item.classList.add("species-item");
-            item.textContent = animal.name;
+            const li = document.createElement("li");
+            li.classList.add("species-item");
+            li.textContent = animal.name;
 
-            item.addEventListener("mouseenter", () => {
+            li.addEventListener("mouseenter", () => {
                 highlightRegion(animal.habitat);
             });
 
-            item.addEventListener("mouseleave", resetMap);
+            li.addEventListener("mouseleave", resetMap);
 
-            list.appendChild(item);
+            list.appendChild(li);
         });
     })
     .catch(err => console.error("❌ Could not load species.json", err));
 
 
-/* ----------------------
-   Highlight Habitat
-   ---------------------- */
+/* -----------------------------------------------
+   BLUR GLOW HABITAT CIRCLE
+-------------------------------------------------- */
 function highlightRegion(habitat) {
     if (!habitat) return;
 
-    fetch(`geojson/${habitat}.geojson`)
+    fetch(`static/geojson/${habitat}.geojson`)
         .then(res => res.json())
         .then(geo => {
+
             if (currentLayer) map.removeLayer(currentLayer);
 
-            currentLayer = L.geoJSON(geo, {
-                style: {
-                    color: "#ff3333",
-                    weight: 3,
-                    fillColor: "#ff8080",
-                    fillOpacity: 0.6
-                }
-            }).addTo(map);
+            // get polygon center
+            const layer = L.geoJSON(geo);
+            const center = layer.getBounds().getCenter();
 
-            map.fitBounds(currentLayer.getBounds());
-        });
+            // blurred glow effect using two circles
+            const outerGlow = L.circle(center, {
+                radius: 160000,
+                color: "#ff3333",
+                fillColor: "#ff4d4d",
+                fillOpacity: 0.25,
+                weight: 0
+            });
+
+            const innerGlow = L.circle(center, {
+                radius: 95000,
+                color: "#ff3333",
+                fillColor: "#ff3333",
+                fillOpacity: 0.55,
+                weight: 0
+            });
+
+            currentLayer = L.layerGroup([outerGlow, innerGlow]).addTo(map);
+
+            map.setView(center, 6);
+        })
+        .catch(err => console.error("❌ GeoJSON not found:", habitat));
 }
 
-
-/* ----------------------
-   Reset Map
-   ---------------------- */
+/* -----------------------------------------------
+   RESET MAP
+-------------------------------------------------- */
 function resetMap() {
     if (currentLayer) {
         map.removeLayer(currentLayer);

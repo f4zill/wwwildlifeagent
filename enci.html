@@ -1,102 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wildlife Encyclopedia</title>
-</head>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wildlife Encyclopedia • Cruselia</title>
 <style>
     body {
         font-family: Poppins, sans-serif;
         margin: 0;
-        background: #f4f6f9;
+        background: #eef2f3;
+        transition: background 0.3s;
+        position: relative;
     }
 
-    header {
-        text-align: center;
-        background: #2b4b82;
-        color: white;
-        padding: 30px 20px;
-        margin-bottom: 10px;
-    }
-
-    .filters {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 15px;
-        padding: 15px;
-        background: #e9edf3;
-    }
-
-    .filters input,
-    .filters select {
-        padding: 10px 14px;
-        font-size: 15px;
-        border-radius: 8px;
-        border: 1px solid #ccc;
-        outline: none;
-        flex: 1 1 200px; /* responsive width */
-        min-width: 120px;
-    }
-
-    .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-        gap: 20px;
-        padding: 20px;
-    }
-
-    .card {
-        background: white;
-        border-radius: 14px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        padding: 15px;
-        transition: 0.3s;
-        cursor: pointer;
-    }
-
-    .card:hover {
-        transform: scale(1.03);
-    }
-
-    .card img {
-        width: 100%;
-        height: 180px;
-        border-radius: 12px;
-        object-fit: cover;
-        background: #ddd;
-    }
-
-    .card h3 {
-        margin: 10px 0 5px;
-        font-size: 20px;
-        color: #333;
-    }
-
-    .card p {
-        margin: 4px 0;
-        font-size: 14px;
-    }
-
-    .status {
-        font-weight: bold;
-    }
-
-    .status.Least\ Concern { color: #2ecc71; }
-    .status.Vulnerable { color: #f1c40f; }
-    .status.Endangered { color: #e67e22; }
-    .status.Critically\ Endangered { color: #e74c3c; }
-
+    /* NAVBAR */
     nav {
         width: 100%;
         background: #0d1b2a;
         padding: 12px 0;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.25);
         position: sticky;
         top: 0;
         z-index: 100;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.25);
     }
 
     nav ul {
@@ -105,8 +30,8 @@
         justify-content: center;
         flex-wrap: wrap;
         gap: 20px;
-        padding: 0;
         margin: 0;
+        padding: 0;
     }
 
     nav ul li a {
@@ -124,81 +49,153 @@
         transform: scale(1.05);
     }
 
-    /* ----------------- MOBILE RESPONSIVE ----------------- */
-    @media (max-width: 768px) {
-        header {
-            padding: 20px 15px;
-        }
-
-        .filters {
-            gap: 10px;
-            padding: 12px;
-        }
-
-        .filters input,
-        .filters select {
-            font-size: 14px;
-        }
-
-        nav ul li a {
-            font-size: 14px;
-            padding: 6px 10px;
-        }
-
-        .grid {
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            padding: 15px;
-        }
-
-        .card img {
-            height: 150px;
-        }
-
-        .card h3 {
-            font-size: 18px;
-        }
-
-        .card p {
-            font-size: 13px;
-        }
+    /* HEADER */
+    header {
+        text-align: center;
+        background: linear-gradient(135deg,#2b4b82,#415a77);
+        color: white;
+        padding: 60px 20px 80px 20px;
+        margin-bottom: 15px;
+        position: relative;
+        overflow: hidden;
     }
 
-    @media (max-width: 480px) {
-        .grid {
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 15px;
-        }
+    header h1 {
+        font-size: 36px;
+        margin-bottom: 10px;
+        position: relative;
+        z-index: 2;
+    }
 
-        .filters {
-            flex-direction: column;
-            align-items: stretch;
-        }
+    header p {
+        font-size: 18px;
+        opacity: 0.9;
+        position: relative;
+        z-index: 2;
+    }
 
-        .filters input,
-        .filters select {
-            width: 100%;
-        }
+    /* Canvas particles */
+    #particleCanvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        pointer-events: none;
+    }
 
-        .card img {
-            height: 130px;
-        }
+    /* FILTERS */
+    .filters {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+        padding: 15px;
+        background: #e9edf3;
+        border-bottom: 2px solid #d0d4db;
+    }
 
-        .card h3 {
-            font-size: 16px;
-        }
+    .filters input,
+    .filters select {
+        padding: 10px 14px;
+        font-size: 15px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        outline: none;
+        flex: 1 1 200px;
+        min-width: 120px;
+        transition: all 0.3s ease;
+    }
 
-        .card p {
-            font-size: 12px;
-        }
+    .filters input:focus,
+    .filters select:focus {
+        border-color: #2b4b82;
+        box-shadow: 0 0 8px rgba(43,75,130,0.4);
+    }
 
-        nav ul {
-            gap: 10px;
-        }
+    /* GRID */
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 22px;
+        padding: 20px;
+    }
+
+    /* CARD */
+    .card {
+        background: white;
+        border-radius: 14px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        padding: 15px;
+        cursor: pointer;
+        transition: transform 0.3s, box-shadow 0.3s, border 0.3s;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .card::after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+        transform: rotate(45deg) translate(-100%, -100%);
+        transition: transform 0.6s ease;
+    }
+
+    .card:hover::after {
+        transform: rotate(45deg) translate(0,0);
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+    }
+
+    .card img {
+        width: 100%;
+        height: 180px;
+        border-radius: 12px;
+        object-fit: cover;
+        background: #ddd;
+        transition: transform 0.3s;
+    }
+
+    .card:hover img {
+        transform: scale(1.03);
+    }
+
+    .card h3 {
+        margin: 10px 0 5px;
+        font-size: 20px;
+        color: #2b4b82;
+    }
+
+    .card p {
+        margin: 4px 0;
+        font-size: 14px;
+        color: #333;
+    }
+
+    .status { font-weight: bold; }
+    .status.Least\ Concern { color: #2ecc71; }
+    .status.Vulnerable { color: #f1c40f; }
+    .status.Endangered { color: #e67e22; }
+    .status.Critically\ Endangered { color: #e74c3c; }
+
+    @media (max-width: 600px) {
+        header h1 { font-size: 28px; }
+        header p { font-size: 16px; }
+        .filters input, .filters select { flex: 1 1 150px; }
     }
 </style>
-
+</head>
 <body>
 
+<!-- NAVBAR -->
 <nav>
     <ul>
         <li><a href="index.html">home</a></li>
@@ -208,89 +205,186 @@
     </ul>
 </nav>
 
-    <header>
-        <h1>Wildlife Encyclopedia</h1>
-        <p>Learn about India's diverse animal species</p>
-    </header>
+<!-- HEADER -->
+<header>
+    <canvas id="particleCanvas"></canvas>
+    <h1>Wildlife Encyclopedia</h1>
+    <p>Explore and learn about India's rich animal diversity</p>
+</header>
 
-    <div class="filters">
-        <input type="text" id="searchBar" placeholder="Search species...">
-        <select id="statusFilter">
-            <option value="all">All Status</option>
-            <option value="Least Concern">Least Concern</option>
-            <option value="Vulnerable">Vulnerable</option>
-            <option value="Endangered">Endangered</option>
-        </select>
-    </div>
+<!-- FILTERS -->
+<div class="filters">
+    <input type="text" id="searchBar" placeholder="Search species...">
+    <select id="statusFilter">
+        <option value="all">All Status</option>
+        <option value="Least Concern">Least Concern</option>
+        <option value="Vulnerable">Vulnerable</option>
+        <option value="Endangered">Endangered</option>
+        <option value="Critically Endangered">Critically Endangered</option>
+    </select>
+</div>
 
-    <div id="species-container" class="grid"></div>
+<!-- SPECIES GRID -->
+<div id="species-container" class="grid"></div>
+<script>
+// PARTICLE CANVAS
+const canvas = document.getElementById('particleCanvas');
+const ctx = canvas.getContext('2d');
 
-    <script>
-        let allSpecies = [];
-        const container = document.getElementById("species-container");
+let w = canvas.offsetWidth;
+let h = canvas.offsetHeight;
+const dpr = window.devicePixelRatio || 1;
+canvas.width = w * dpr;
+canvas.height = h * dpr;
+ctx.scale(dpr, dpr);
 
-        async function loadSpecies() {
-            try {
-                const res = await fetch("../data/species.json");
-                allSpecies = await res.json();
-                displaySpecies(allSpecies);
-            } catch (err) {
-                console.error("Error loading species:", err);
+let mouse = { x: w / 2, y: h / 2 };
+
+window.addEventListener('resize', () => {
+    w = canvas.offsetWidth;
+    h = canvas.offsetHeight;
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    ctx.scale(dpr, dpr);
+    initParticles();
+});
+
+canvas.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+});
+
+// PARTICLES
+let particles = [];
+const count = 100;
+
+function initParticles() {
+    particles = [];
+    for (let i = 0; i < count; i++) {
+        particles.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            vx: (Math.random() - 0.5) * 1.2,
+            vy: (Math.random() - 0.5) * 1.2,
+            size: Math.random() * 2 + 1
+        });
+    }
+}
+initParticles();
+
+function drawParticles() {
+    ctx.clearRect(0, 0, w, h);
+
+    for (let p of particles) {
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0 || p.x > w) p.vx *= -1;
+        if (p.y < 0 || p.y > h) p.vy *= -1;
+
+        const dx = p.x - mouse.x;
+        const dy = p.y - mouse.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < 80) {
+            const angle = Math.atan2(dy, dx);
+            const force = (80 - dist) / 80;
+            p.vx += Math.cos(angle) * force * 0.2;
+            p.vy += Math.sin(angle) * force * 0.2;
+        }
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(255,255,255,0.85)";
+        ctx.fill();
+
+        for (let q of particles) {
+            const dx2 = p.x - q.x;
+            const dy2 = p.y - q.y;
+            if (dx2 * dx2 + dy2 * dy2 < 10000) {
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(q.x, q.y);
+                ctx.strokeStyle = "rgba(255,255,255,0.1)";
+                ctx.lineWidth = 1;
+                ctx.stroke();
             }
         }
+    }
 
-        function displaySpecies(list) {
-            container.innerHTML = "";
+    requestAnimationFrame(drawParticles);
+}
+drawParticles();
 
-            list.forEach(animal => {
-                const card = document.createElement("div");
-                card.className = "card";
-                card.onclick = () => openDetails(animal.name);
+// SPECIES DATA
+let allSpecies = [];
+const container = document.getElementById("species-container");
 
-                const imgName = animal.name
-                    .toLowerCase()
-                    .replace(/\s+/g, "_")
-                    .replace(/[()\-]/g, "")
-                    .replace(/__+/g, "_") + ".jpg";
+async function loadSpecies() {
+    try {
+        const res = await fetch("static/data/species.json");
+        allSpecies = await res.json();
+        displaySpecies(allSpecies);
+    } catch (err) {
+        console.error("Error loading species:", err);
+        container.innerHTML = "<h2>Error loading species data</h2>";
+    }
+}
 
-                const imgPath = `../assets/animals/${imgName}`;
+// DISPLAY SPECIES CARDS
+function displaySpecies(list) {
+    container.innerHTML = "";
+    list.forEach(animal => {
+        const card = document.createElement("div");
+        card.className = "card";
 
-                card.innerHTML = `
-                    <img src="${imgPath}" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
-                    <h3>${animal.name}</h3>
-                    <p><strong>Scientific Name:</strong> ${animal.scientific_name}</p>
-                    <p><strong>Habitat:</strong> ${animal.habitat.replace(/_/g, " ")}</p>
-                    <p class="status ${animal.status}">
-                        <strong>Status:</strong> ${animal.status}
-                    </p>
-                `;
+        const imgName = animal.name
+            .toLowerCase()
+            .replace(/\s+/g, "_")
+            .replace(/[()\-]/g, "")
+            .replace(/__+/g, "_") + ".jpg";
 
-                container.appendChild(card);
-            });
-        }
+        const imgPath = `static/assets/animals/${imgName}`;
 
-        function applyFilters() {
-            const search = document.getElementById("searchBar").value.toLowerCase();
-            const status = document.getElementById("statusFilter").value;
+        card.innerHTML = `
+            <img src="${imgPath}" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
+            <h3>${animal.name}</h3>
+            <p><strong>Scientific Name:</strong> ${animal.scientific_name}</p>
+            <p><strong>Habitat:</strong> ${animal.habitat.replace(/_/g," ")}</p>
+            <p class="status ${animal.status}"><strong>Status:</strong> ${animal.status}</p>
+        `;
 
-            const filtered = allSpecies.filter(a => {
-                const matchesSearch = a.name.toLowerCase().includes(search);
-                const matchesStatus = status === "all" || a.status === status;
-                return matchesSearch && matchesStatus;
-            });
+        card.addEventListener("click", () => {
+            // Navigate to species detail page with URL encoding
+            window.location.href = `species.html?name=${encodeURIComponent(animal.name)}`;
+        });
 
-            displaySpecies(filtered);
-        }
+        container.appendChild(card);
+    });
+}
 
-        document.getElementById("searchBar").oninput = applyFilters;
-        document.getElementById("statusFilter").onchange = applyFilters;
+// FILTERING
+function applyFilters() {
+    const search = document.getElementById("searchBar").value.toLowerCase();
+    const status = document.getElementById("statusFilter").value;
 
-        function openDetails(name) {
-            window.location.href = `species.html?name=${encodeURIComponent(name)}`;
-        }
+    const filtered = allSpecies.filter(a => {
+        const matchesSearch = a.name.toLowerCase().includes(search);
+        const matchesStatus = status === "all" || a.status === status;
+        return matchesSearch && matchesStatus;
+    });
 
-        loadSpecies();
-    </script>
+    displaySpecies(filtered);
+}
+
+// INPUT EVENTS
+document.getElementById("searchBar").oninput = applyFilters;
+document.getElementById("statusFilter").onchange = applyFilters;
+
+// INITIALIZE
+loadSpecies();
+</script>
 
 </body>
 </html>

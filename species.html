@@ -134,8 +134,8 @@
     <ul>
         <li><a href="index.html">home</a></li>
         <li><a href="upload.html">identify</a></li>
-        <li><a href="about.html">about</a></li>
-        <li><a href="encyclopedia.html">encyclopedia</a></li>
+        <li><a href="enci.html">encyclopedia</a></li>
+        <li><a href="map.html">map</a></li>
     </ul>
 </nav>
 
@@ -144,34 +144,38 @@
 </div>
 
 <script>
-    // Get the species name from URL
+    // Get the 'name' parameter from the URL and decode it
     const params = new URLSearchParams(window.location.search);
-    const speciesName = params.get("name");
+    const speciesName = decodeURIComponent(params.get("name"));
 
     const container = document.getElementById("species-container");
 
     async function loadSpecies() {
         try {
-            const res = await fetch("../data/species.json");
+            // Load species JSON data
+            const res = await fetch("static/data/species.json");
             const species = await res.json();
 
-            const animal = species.find(a => a.name === speciesName);
+            // Find the species by name (case-insensitive)
+            const animal = species.find(a => a.name.toLowerCase() === speciesName.toLowerCase());
 
             if (!animal) {
                 container.innerHTML = "<h1>Species Not Found</h1>";
                 return;
             }
 
+            // Construct image path
             const imgName = animal.name
                 .toLowerCase()
                 .replace(/\s+/g, "_")
                 .replace(/[()\-]/g, "")
                 .replace(/__+/g, "_") + ".jpg";
 
-            const imgPath = `../assets/animals/${imgName}`;
+            const imgPath = `static/assets/animals/${imgName}`;
 
+            // Render species details
             container.innerHTML = `
-                <img src="${imgPath}" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
+                <img src="${imgPath}" onerror="this.src='https://via.placeholder.com/600x300?text=No+Image'">
                 <h1>${animal.name}</h1>
                 <p><strong>Scientific Name:</strong> ${animal.scientific_name}</p>
                 <p><strong>Habitat:</strong> ${animal.habitat.replace(/_/g, " ")}</p>
@@ -179,9 +183,9 @@
                 <button id="backButton">← Back to Encyclopedia</button>
             `;
 
-            // Back button click
+            // Back button functionality
             document.getElementById("backButton").onclick = () => {
-                window.history.back();
+                window.location.href = "enci.html";
             };
 
         } catch (err) {
@@ -190,8 +194,10 @@
         }
     }
 
+    // Initialize
     loadSpecies();
 </script>
+
 
 </body>
 </html>

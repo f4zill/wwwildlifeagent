@@ -7,28 +7,38 @@ import os
 
 app = Flask(__name__, static_folder=".", template_folder=".")
 
-# Path Configurations
+# ----------------------
+# PATHS
+# ----------------------
 MODEL_PATH = "animal_classifier.h5"
 CLASS_MAP_PATH = "class_indices.json"
-SPECIES_DATA_PATH = "data/species.json"
+SPECIES_DATA_PATH = "static/data/species.json"
 UPLOAD_FOLDER = "uploads"
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-# Load Model
-model = load_model(MODEL_PATH)
+# ----------------------
+# LOAD MODEL + METADATA
+# ----------------------
+try:
+    model = load_model(MODEL_PATH)
+    print("✔ Model Loaded Successfully")
+except Exception as e:
+    print("❌ Model Load Error:", e)
 
-# Load Class Indices
 with open(CLASS_MAP_PATH) as f:
     class_map = json.load(f)
-labels = {v: k for k, v in class_map.items()}  # reverse key/value
 
-# Load Species Metadata
-with open(SPECIES_DATA_PATH) as s:
-    species_data = json.load(s)
+# reverse mapping: {0: "elephant", 1: "tiger", ...}
+labels = {v: k for k, v in class_map.items()}
+
+with open(SPECIES_DATA_PATH) as f:
+    species_data = json.load(f)
 
 
-# ========== PAGE ROUTES ==========
+# ----------------------
+# ROUTES FOR PAGES
+# ----------------------
 @app.route("/")
 @app.route("/index.html")
 def index():
@@ -36,12 +46,12 @@ def index():
 
 
 @app.route("/upload.html")
-def upload():
+def upload_page():
     return send_from_directory(".", "upload.html")
 
 
 @app.route("/enci.html")
-def enci():
+def enci_page():
     return send_from_directory(".", "enci.html")
 
 
@@ -51,27 +61,54 @@ def map_page():
 
 
 @app.route("/species.html")
-def species():
+def species_page():
     return send_from_directory(".", "species.html")
 
 
-# ========== SERVE STATIC FILES (data, geojson, libs, images, etc.) ==========
+# ----------------------
+# SERVE STATIC FILES
+# ----------------------
 @app.route("/<path:filename>")
-def static_files(filename):
+def serve_static(filename):
     if os.path.exists(filename):
         return send_from_directory(".", filename)
     return "404 Not Found"
 
 
-# ========== IMAGE PREPROCESSING ==========
+# ----------------------
+# IMAGE PREPROCESS
+# ----------------------
 def prepare_image(image_path):
-    img = load_img(image_path, target_size=(224, 224))  # change if your model uses diff size
-    img = img_to_array(img) / 255.0
-    img = np.expand_dims(img, axis=0)
-    return img
+    try:
+        img = load_img(image_path, target_size=(224, 224))
+        img = img_to_array(img) / 255.0
+        img = np.expand_dims(img, axis=0)
+        return img
+    except Exception as e:
+        print("Image processing error:", e)
+        return None
 
 
-# ========== PREDICTION API ==========
+# ----------------------
+# NORMALIZATION FOR NAME MATCHING
+# ----------------------
+def normalize(name):
+    return (
+        name.lower()
+        .replace("(domestic)", "")
+        .replace("(wild water buffalo)", "")
+        .replace("(asian elephant)", "")
+        .replace("(black panther – melanistic leopard)", "")
+        .replace("(", "")
+        .replace(")", "")
+        .replace("-", "")
+        .strip()
+    )
+
+
+# ----------------------
+# IDENTIFICATION API
+# ----------------------
 @app.route("/identify", methods=["POST"])
 def identify():
     if "image" not in request.files:
@@ -82,43 +119,37 @@ def identify():
     file.save(img_path)
 
     img = prepare_image(img_path)
+    if img is None:
+        return jsonify({"error": "Image processing failed"}), 500
+
+    # Prediction
     preds = model.predict(img)
-
-    idx = np.argmax(preds[0])
+    idx = int(np.argmax(preds[0]))
     confidence = float(np.max(preds[0]))
-    predicted_name = labels.get(idx, "Unknown").lower().strip()
 
-    # Cleaning function to match names properly
-    def normalize(n):
-        return (
-            n.lower()
-             .replace("(domestic)", "")
-             .replace("(wild water buffalo)", "")
-             .replace("(asian elephant)", "")
-             .replace("(black panther – melanistic leopard)", "")
-             .replace("(", "")
-             .replace(")", "")
-             .replace("-", "")
-             .strip()
-        )
+    # Raw predicted name
+    predicted_label = labels.get(idx, "Unknown")
+    predicted_clean = normalize(predicted_label)
 
-    predicted_clean = normalize(predicted_name)
-
-    # Fuzzy match from species.json
-    details = next(
-        (a for a in species_data if predicted_clean in normalize(a["name"])),
+    # Try to find metadata from species.json using fuzzy match
+    matched = next(
+        (item for item in species_data if predicted_clean in normalize(item["name"])),
         None
     )
 
-    return jsonify({
-        "name": details["name"] if details else predicted_name,
-        "scientific_name": details["scientific_name"] if details else "Not Available",
-        "status": details["status"] if details else "Unknown",
-        "upload_count": 1,
-        "confidence": round(confidence, 3)
-    })
+    response = {
+        "name": matched["name"] if matched else predicted_label,
+        "scientific_name": matched["scientific_name"] if matched else "Not Available",
+        "status": matched["status"] if matched else "Unknown",
+        "confidence": round(confidence, 3),
+        "upload_count": 1
+    }
+
+    return jsonify(response)
 
 
-# Run Server
+# ----------------------
+# RUN APP
+# ----------------------
 if __name__ == "__main__":
     app.run(debug=True)

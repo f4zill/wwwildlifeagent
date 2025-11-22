@@ -1,0 +1,146 @@
+[
+  {
+    "name": "bat (Indian Flying Fox)",
+    "scientific_name": "Pteropus giganteus",
+    "habitat": "central_india_forests",
+    "status": "Least Concern"
+  },
+  {
+    "name": "buffalo (Wild Water Buffalo)",
+    "scientific_name": "Bubalus arnee",
+    "habitat": "northeast_forests",
+    "status": "Endangered"
+  },
+  {
+    "name": "Chicken (Red Junglefowl)",
+    "scientific_name": "Gallus gallus",
+    "habitat": "eastern_ghats",
+    "status": "Least Concern"
+  },
+  {
+    "name": "cow (Domestic)",
+    "scientific_name": "Bos taurus / Bos indicus",
+    "habitat": "gangetic_ghats",
+    "status": "Least Concern"
+  },
+  {
+    "name": "crow (House Crow)",
+    "scientific_name": "Corvus splendens",
+    "habitat": "coastal_india",
+    "status": "Least Concern"
+  },
+  {
+    "name": "deer (Chital)",
+    "scientific_name": "Axis axis",
+    "habitat": "central_india_forests",
+    "status": "Least Concern"
+  },
+  {
+    "name": "Duck (Spot-billed Duck)",
+    "scientific_name": "Anas poecilorhyncha",
+    "habitat": "gangetic_ghats",
+    "status": "Least Concern"
+  },
+  {
+    "name": "Eagle (Indian Eagle-Owl)",
+    "scientific_name": "Bubo bengalensis",
+    "habitat": "central_india_forests",
+    "status": "Least Concern"
+  },
+  {
+    "name": "elephant (Asian Elephant)",
+    "scientific_name": "Elephas maximus",
+    "habitat": "northeast_forests",
+    "status": "Endangered"
+  },
+  {
+    "name": "horse (Kiang - wild horse)",
+    "scientific_name": "Equus kiang",
+    "habitat": "trans_himalayas",
+    "status": "Least Concern"
+  },
+  {
+    "name": "INDIAN BUSTARD (Great Indian Bustard)",
+    "scientific_name": "Ardeotis nigriceps",
+    "habitat": "thar_desert",
+    "status": "Critically Endangered"
+  },
+  {
+    "name": "INDIAN PITTA",
+    "scientific_name": "Pitta brachyura",
+    "habitat": "western_ghats",
+    "status": "Least Concern"
+  },
+  {
+    "name": "INDIAN VULTURE",
+    "scientific_name": "Gyps indicus",
+    "habitat": "central_india_forests",
+    "status": "Critically Endangered"
+  },
+  {
+    "name": "leopard (Indian Leopard)",
+    "scientific_name": "Panthera pardus fusca",
+    "habitat": "western_ghats",
+    "status": "Vulnerable"
+  },
+  {
+    "name": "Lion (Asiatic Lion)",
+    "scientific_name": "Panthera leo persica",
+    "habitat": "thar_desert",
+    "status": "Endangered"
+  },
+  {
+    "name": "mole (Indian Mole)",
+    "scientific_name": "Talpa micrura",
+    "habitat": "himalayas",
+    "status": "Least Concern"
+  },
+  {
+    "name": "Monkey (Rhesus Macaque)",
+    "scientific_name": "Macaca mulatta",
+    "habitat": "gangetic_ghats",
+    "status": "Least Concern"
+  },
+  {
+    "name": "mouse (House Mouse)",
+    "scientific_name": "Mus musculus",
+    "habitat": "gangetic_ghats",
+    "status": "Least Concern"
+  },
+  {
+    "name": "otter (Smooth-coated Otter)",
+    "scientific_name": "Lutrogale perspicillata",
+    "habitat": "coastal_india",
+    "status": "Vulnerable"
+  },
+  {
+    "name": "Panthers (Black Panther - melanistic Leopard)",
+    "scientific_name": "Panthera pardus fusca (melanistic form)",
+    "habitat": "western_ghats",
+    "status": "Vulnerable"
+  },
+  {
+    "name": "pig (Wild Boar)",
+    "scientific_name": "Sus scrofa",
+    "habitat": "eastern_ghats",
+    "status": "Least Concern"
+  },
+  {
+    "name": "rat (Indian Bush Rat)",
+    "scientific_name": "Golunda ellioti",
+    "habitat": "central_india_forests",
+    "status": "Least Concern"
+  },
+  {
+    "name": "Rhino (Indian One-Horned Rhinoceros)",
+    "scientific_name": "Rhinoceros unicornis",
+    "habitat": "northeast_forests",
+    "status": "Vulnerable"
+  },
+  {
+    "name": "tiger (Bengal Tiger)",
+    "scientific_name": "Panthera tigris tigris",
+    "habitat": "sundarbans",
+    "status": "Endangered"
+  }
+]

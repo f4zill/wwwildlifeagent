@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Identify Animal • Cruselia</title>
+
     <style>
         body {
             margin: 0;
@@ -11,91 +12,121 @@
             background: #eef2f3;
         }
 
+        /* NAVBAR */
         nav {
             width: 100%;
             background: #0d1b2a;
             padding: 12px 0;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 200;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
         }
 
         nav ul {
-            list-style: none;
             display: flex;
             justify-content: center;
-            flex-wrap: wrap;
-            gap: 30px;
-            padding: 0;
+            gap: 32px;
             margin: 0;
+            padding: 0;
+            list-style: none;
         }
 
         nav ul li a {
-            text-decoration: none;
             color: #e0e1dd;
+            text-decoration: none;
             font-size: 16px;
             padding: 8px 14px;
-            font-weight: 600;
             border-radius: 6px;
-            transition: background 0.25s ease, transform 0.15s ease;
+            font-weight: 600;
+            transition: 0.25s;
         }
 
         nav ul li a:hover {
             background: #1b263b;
-            transform: scale(1.05);
+            transform: scale(1.06);
         }
 
+        /* HERO WITH CANVAS */
+        .hero {
+            position: relative;
+            height: 260px;
+            background: linear-gradient(to bottom right, #1b263b, #415a77);
+            overflow: hidden;
+        }
+
+        #bgCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 260px;
+            z-index: 1;
+        }
+
+        .hero-text {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            color: white;
+            padding-top: 70px;
+        }
+
+        .hero-text h1 {
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .hero-text p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        /* UPLOAD CONTAINER */
         #upload-container {
             max-width: 650px;
             margin: 50px auto;
             background: white;
-            border-radius: 16px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+            border-radius: 18px;
             padding: 40px 30px;
-            text-align: center;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+            animation: fadeUp 0.6s ease;
         }
 
-        #upload-container h1 {
-            color: #2b4b82;
-            font-size: 28px;
-            margin-bottom: 20px;
-        }
-
-        #upload-container p {
-            color: #333;
-            font-size: 16px;
-            margin-bottom: 25px;
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
         .upload-area {
             border: 2px dashed #2b4b82;
             padding: 30px;
+            text-align: center;
             border-radius: 16px;
             background: #f9fafe;
             cursor: pointer;
-            transition: background 0.3s ease, border-color 0.3s ease;
+            transition: 0.3s ease;
         }
 
         .upload-area:hover {
-            background: #f0f4fc;
-            border-color: #1f3a66;
+            background: #e7eeff;
+            border-color: #4b72b6;
+            box-shadow: 0 0 14px rgba(70,110,180,0.4);
         }
 
-        input[type="file"] {
-            display: none;
-        }
+        input[type="file"] { display: none; }
 
         .upload-btn {
-            margin-top: 20px;
             padding: 14px 28px;
-            font-size: 16px;
+            margin-top: 22px;
             background: #2b4b82;
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
+            font-size: 16px;
             cursor: pointer;
-            transition: background 0.3s ease, transform 0.15s ease;
+            transition: 0.3s;
         }
 
         .upload-btn:hover {
@@ -103,38 +134,31 @@
             transform: scale(1.05);
         }
 
+        /* RESULT BOX */
         #result {
             margin-top: 35px;
-            text-align: left;
             background: #f5f7fb;
             padding: 20px;
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            display: none;
+            animation: fadeUp 0.4s ease;
         }
 
         #result img {
-            max-width: 100%;
+            width: 100%;
             border-radius: 12px;
-            margin-bottom: 15px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
+            margin-bottom: 12px;
         }
 
         #result h3 {
             color: #2b4b82;
-            margin-bottom: 10px;
         }
 
-        #result p {
-            margin: 6px 0;
-        }
-
-        /* Counter section */
+        /* COUNTER SECTION */
         #species-counter {
             max-width: 800px;
             margin: 50px auto;
-            background: #fff;
+            background: white;
             padding: 25px;
             border-radius: 16px;
             box-shadow: 0 6px 20px rgba(0,0,0,0.12);
@@ -142,13 +166,13 @@
 
         #species-counter h2 {
             color: #2b4b82;
-            margin-bottom: 20px;
             text-align: center;
+            margin-bottom: 18px;
         }
 
         .counter-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(140px,1fr));
             gap: 15px;
         }
 
@@ -157,40 +181,27 @@
             padding: 12px;
             border-radius: 12px;
             text-align: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: 0.3s;
+            cursor: pointer;
         }
 
-        .counter-card h4 {
-            margin: 6px 0;
-            font-size: 16px;
-            color: #333;
+        .counter-card:hover {
+            background: #e7eeff;
+            transform: translateY(-3px);
+            box-shadow: 0 0 12px rgba(70,110,180,0.3);
         }
 
         .counter-card span {
-            display: block;
             font-size: 18px;
-            font-weight: bold;
             color: #2b4b82;
-        }
-
-        @media (max-width: 600px) {
-            #upload-container {
-                padding: 25px 20px;
-                margin: 30px 15px;
-            }
-
-            #upload-container h1 {
-                font-size: 24px;
-            }
-
-            #upload-container p {
-                font-size: 14px;
-            }
+            font-weight: 700;
         }
     </style>
 </head>
+
 <body>
 
+<!-- NAVBAR -->
 <nav>
     <ul>
         <li><a href="index.html">home</a></li>
@@ -200,10 +211,17 @@
     </ul>
 </nav>
 
-<div id="upload-container">
-    <h1>Identify Animal</h1>
-    <p>Upload an image to let our AI recognize the species and show its details.</p>
+<!-- HERO -->
+<div class="hero">
+    <canvas id="bgCanvas"></canvas>
+    <div class="hero-text">
+        <h1>Identify Animal</h1>
+        <p>Upload an image and let Cruselia detect the species.</p>
+    </div>
+</div>
 
+<!-- UPLOAD SECTION -->
+<div id="upload-container">
     <label class="upload-area" for="imageInput">
         Click or Drag & Drop to upload
         <input type="file" id="imageInput" accept="image/*">
@@ -214,74 +232,128 @@
     <div id="result"></div>
 </div>
 
+<!-- COUNTER SECTION -->
 <div id="species-counter">
     <h2>Species Upload Counts</h2>
-    <div class="counter-grid" id="counterGrid"></div>
+    <div id="counterGrid" class="counter-grid"></div>
 </div>
 
+<!-- SCRIPT -->
 <script>
-let speciesCounts = {}; // Holds counts per species
-let speciesList = [];   // Holds all species names
+/* ------------------------------
+   Particle Canvas Background
+--------------------------------*/
+const canvas = document.getElementById("bgCanvas");
+const ctx = canvas.getContext("2d");
 
-// Load species list from JSON to initialize counters
-fetch("../data/species.json")
+let w = canvas.width = window.innerWidth;
+let h = canvas.height = 260;
+
+let particles = [];
+let count = 80;
+
+for (let i = 0; i < count; i++) {
+    particles.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 1.2,
+        vy: (Math.random() - 0.5) * 1.2,
+        size: Math.random() * 2 + 1
+    });
+}
+
+function animate() {
+    ctx.clearRect(0,0,w,h);
+
+    particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0 || p.x > w) p.vx *= -1;
+        if (p.y < 0 || p.y > h) p.vy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+        ctx.fillStyle = "rgba(255,255,255,0.85)";
+        ctx.fill();
+
+        particles.forEach(q => {
+            let dx = p.x - q.x;
+            let dy = p.y - q.y;
+            if (dx*dx + dy*dy < 9000) {
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(q.x, q.y);
+                ctx.strokeStyle = "rgba(255,255,255,0.12)";
+                ctx.stroke();
+            }
+        })
+    });
+
+    requestAnimationFrame(animate);
+}
+animate();
+
+/* ------------------------------
+   Species Counters
+--------------------------------*/
+let speciesCounts = {};
+let speciesList = [];
+
+fetch("../static/data/species.json")
     .then(res => res.json())
     .then(data => {
         speciesList = data.map(a => a.name);
         speciesList.forEach(name => speciesCounts[name] = 0);
         renderCounters();
-    })
-    .catch(err => console.error("Error loading species:", err));
+    });
 
 function renderCounters() {
     const grid = document.getElementById("counterGrid");
     grid.innerHTML = "";
     speciesList.forEach(name => {
-        const card = document.createElement("div");
-        card.className = "counter-card";
-        card.innerHTML = `
-            <h4>${name}</h4>
-            <span id="count-${name.replace(/\s+/g,'_')}">${speciesCounts[name]}</span>
+        const key = name.replace(/\s+/g, "_");
+        grid.innerHTML += `
+            <div class="counter-card">
+                <h4>${name}</h4>
+                <span id="count-${key}">0</span>
+            </div>
         `;
-        grid.appendChild(card);
     });
 }
 
+/* ------------------------------
+   Upload + Identify
+--------------------------------*/
 async function uploadImage() {
     const input = document.getElementById("imageInput");
     const file = input.files[0];
 
     if (!file) {
-        alert("Please select an image first!");
+        alert("Please upload an image!");
         return;
     }
 
     const formData = new FormData();
     formData.append("image", file);
 
-    try {
-        const res = await fetch("/identify", { method: "POST", body: formData });
-        const data = await res.json();
+    const res = await fetch("/identify", { method: "POST", body: formData });
+    const data = await res.json();
 
-        // Display result
-        const resultDiv = document.getElementById("result");
-        resultDiv.innerHTML = `
-            <img src="${URL.createObjectURL(file)}">
-            <h3>${data.name}</h3>
-            <p><strong>Scientific Name:</strong> ${data.scientific_name}</p>
-            <p><strong>Status:</strong> ${data.status}</p>
-            <p><strong>Uploaded Count:</strong> ${data.upload_count}</p>
-        `;
+    const result = document.getElementById("result");
+    result.style.display = "block";
+    result.innerHTML = `
+        <img src="${URL.createObjectURL(file)}">
+        <h3>${data.name}</h3>
+        <p><b>Scientific Name:</b> ${data.scientific_name}</p>
+        <p><b>Status:</b> ${data.status}</p>
+        <p><b>Uploaded Count:</b> ${data.upload_count}</p>
+    `;
 
-        // Update counter
-        if (speciesCounts[data.name] !== undefined) {
-            speciesCounts[data.name]++;
-            document.getElementById(`count-${data.name.replace(/\s+/g,'_')}`).innerText = speciesCounts[data.name];
-        }
-    } catch (err) {
-        console.error("Error identifying image:", err);
-        alert("Something went wrong. Please try again.");
-    }
+    // Update counter
+    speciesCounts[data.name]++;
+    const key = data.name.replace(/\s+/g, "_");
+    document.getElementById("count-" + key).innerText = speciesCounts[data.name];
 }
 </script>
 
