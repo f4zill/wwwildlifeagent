@@ -1,146 +1,170 @@
 [
   {
-    "name": "bat (Indian Flying Fox)",
+    "name": "Indian Flying Fox",
     "scientific_name": "Pteropus giganteus",
     "habitat": "central_india_forests",
-    "status": "Least Concern"
+    "status": "Least Concern",
+    "probability": 82
   },
   {
-    "name": "buffalo (Wild Water Buffalo)",
+    "name": "Wild Water Buffalo",
     "scientific_name": "Bubalus arnee",
     "habitat": "northeast_forests",
-    "status": "Endangered"
+    "status": "Endangered",
+    "probability": 18
   },
   {
-    "name": "Chicken (Red Junglefowl)",
+    "name": "Red Junglefowl",
     "scientific_name": "Gallus gallus",
     "habitat": "eastern_ghats",
-    "status": "Least Concern"
+    "status": "Least Concern",
+    "probability": 70
   },
   {
-    "name": "cow (Domestic)",
+    "name": "cow",
     "scientific_name": "Bos taurus / Bos indicus",
     "habitat": "gangetic_ghats",
-    "status": "Least Concern"
+    "status": "Least Concern",
+    "probability": 95
   },
   {
-    "name": "crow (House Crow)",
+    "name": "House Crow",
     "scientific_name": "Corvus splendens",
     "habitat": "coastal_india",
-    "status": "Least Concern"
+    "status": "Least Concern",
+    "probability": 93
   },
   {
-    "name": "deer (Chital)",
+    "name": "Deer",
     "scientific_name": "Axis axis",
     "habitat": "central_india_forests",
-    "status": "Least Concern"
+    "status": "Least Concern",
+    "probability": 78
   },
   {
-    "name": "Duck (Spot-billed Duck)",
+    "name": "Duck",
     "scientific_name": "Anas poecilorhyncha",
     "habitat": "gangetic_ghats",
-    "status": "Least Concern"
+    "status": "Least Concern",
+    "probability": 65
   },
   {
-    "name": "Eagle (Indian Eagle-Owl)",
+    "name": "Indian Eagle Owl",
     "scientific_name": "Bubo bengalensis",
     "habitat": "central_india_forests",
-    "status": "Least Concern"
+    "status": "Least Concern",
+    "probability": 27
   },
   {
-    "name": "elephant (Asian Elephant)",
+    "name": "Asian Elephant",
     "scientific_name": "Elephas maximus",
     "habitat": "northeast_forests",
-    "status": "Endangered"
+    "status": "Endangered",
+    "probability": 22
   },
   {
-    "name": "horse (Kiang - wild horse)",
+    "name": "Wild Horse",
     "scientific_name": "Equus kiang",
     "habitat": "trans_himalayas",
-    "status": "Least Concern"
+    "status": "Least Concern",
+    "probability": 40
   },
   {
-    "name": "INDIAN BUSTARD (Great Indian Bustard)",
+    "name": "Great Indian Bustard",
     "scientific_name": "Ardeotis nigriceps",
     "habitat": "thar_desert",
-    "status": "Critically Endangered"
+    "status": "Critically Endangered",
+    "probability": 4
   },
   {
     "name": "INDIAN PITTA",
     "scientific_name": "Pitta brachyura",
     "habitat": "western_ghats",
-    "status": "Least Concern"
+    "status": "Least Concern",
+    "probability": 35
   },
   {
     "name": "INDIAN VULTURE",
     "scientific_name": "Gyps indicus",
     "habitat": "central_india_forests",
-    "status": "Critically Endangered"
+    "status": "Critically Endangered",
+    "probability": 7
   },
   {
-    "name": "leopard (Indian Leopard)",
+    "name": "Snow Leopard",
     "scientific_name": "Panthera pardus fusca",
-    "habitat": "western_ghats",
-    "status": "Vulnerable"
+    "habitat": "himalayas",
+    "status": "Vulnerable",
+    "probability": 3
   },
   {
-    "name": "Lion (Asiatic Lion)",
+    "name": "Asiatic Lion",
     "scientific_name": "Panthera leo persica",
     "habitat": "thar_desert",
-    "status": "Endangered"
+    "status": "Endangered",
+    "probability": 16
   },
   {
-    "name": "mole (Indian Mole)",
+    "name": "Indian Mole Rat",
     "scientific_name": "Talpa micrura",
     "habitat": "himalayas",
-    "status": "Least Concern"
+    "status": "Least Concern",
+    "probability": 20
   },
   {
-    "name": "Monkey (Rhesus Macaque)",
+    "name": "Monkey",
     "scientific_name": "Macaca mulatta",
     "habitat": "gangetic_ghats",
-    "status": "Least Concern"
+    "status": "Least Concern",
+    "probability": 95
   },
   {
-    "name": "mouse (House Mouse)",
+    "name": "mouse",
     "scientific_name": "Mus musculus",
     "habitat": "gangetic_ghats",
-    "status": "Least Concern"
+    "status": "Least Concern",
+    "probability": 88
   },
   {
-    "name": "otter (Smooth-coated Otter)",
+    "name": "Otter",
     "scientific_name": "Lutrogale perspicillata",
     "habitat": "coastal_india",
-    "status": "Vulnerable"
+    "status": "Vulnerable",
+    "probability": 25
   },
   {
-    "name": "Panthers (Black Panther - melanistic Leopard)",
+    "name": "Black Panther",
     "scientific_name": "Panthera pardus fusca (melanistic form)",
     "habitat": "western_ghats",
-    "status": "Vulnerable"
+    "status": "Vulnerable",
+    "probability": 8
   },
   {
-    "name": "pig (Wild Boar)",
+    "name": "Wild Boar",
     "scientific_name": "Sus scrofa",
     "habitat": "eastern_ghats",
-    "status": "Least Concern"
+    "status": "Least Concern",
+    "probability": 72
   },
   {
-    "name": "rat (Indian Bush Rat)",
+    "name": "Indian Bush Rat",
     "scientific_name": "Golunda ellioti",
     "habitat": "central_india_forests",
-    "status": "Least Concern"
+    "status": "Least Concern",
+    "probability": 60
   },
   {
-    "name": "Rhino (Indian One-Horned Rhinoceros)",
+    "name": "Indian One Horned Rhinoceros",
     "scientific_name": "Rhinoceros unicornis",
     "habitat": "northeast_forests",
-    "status": "Vulnerable"
+    "status": "Vulnerable",
+    "probability": 28
   },
   {
-    "name": "tiger (Bengal Tiger)",
+    "name": "Bengal Tiger",
     "scientific_name": "Panthera tigris tigris",
     "habitat": "sundarbans",
-    "status": "Endangered"
+    "status": "Endangered",
+    "probability": 12
   }
 ]

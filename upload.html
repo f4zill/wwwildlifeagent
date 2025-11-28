@@ -1,202 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Identify Animal • Cruselia</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Identify Animal • Cruselia</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Poppins, sans-serif;
-            background: #eef2f3;
-        }
+<style>
+    body {
+        margin: 0;
+        font-family: Poppins, sans-serif;
+        background: #eef2f3;
+        transition: background 0.3s, color 0.3s;
+    }
 
-        /* NAVBAR */
-        nav {
-            width: 100%;
-            background: #0d1b2a;
-            padding: 12px 0;
-            position: sticky;
-            top: 0;
-            z-index: 200;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-        }
+    /* NAVBAR */
+    nav {
+        width: 100%;
+        background: #0d1b2a;
+        padding: 12px 0;
+        position: sticky;
+        top: 0;
+        z-index: 200;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        transition: background 0.3s;
+    }
 
-        nav ul {
-            display: flex;
-            justify-content: center;
-            gap: 32px;
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
+    nav ul {
+        display: flex;
+        justify-content: center;
+        gap: 32px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
 
-        nav ul li a {
-            color: #e0e1dd;
-            text-decoration: none;
-            font-size: 16px;
-            padding: 8px 14px;
-            border-radius: 6px;
-            font-weight: 600;
-            transition: 0.25s;
-        }
+    nav ul li a {
+        color: #e0e1dd;
+        text-decoration: none;
+        font-size: 16px;
+        padding: 8px 14px;
+        border-radius: 6px;
+        font-weight: 600;
+        transition: 0.25s;
+    }
 
-        nav ul li a:hover {
-            background: #1b263b;
-            transform: scale(1.06);
-        }
+    nav ul li a:hover {
+        background: #1b263b;
+        transform: scale(1.06);
+    }
 
-        /* HERO WITH CANVAS */
-        .hero {
-            position: relative;
-            height: 260px;
-            background: linear-gradient(to bottom right, #1b263b, #415a77);
-            overflow: hidden;
-        }
+    /* DARK MODE BUTTON */
+    #darkToggle {
+        padding: 6px 12px;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        background: #1b263b;
+        color: white;
+        font-weight: 600;
+        transition: 0.25s;
+    }
+    #darkToggle:hover {
+        background: #2d3f5c;
+    }
 
-        #bgCanvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 260px;
-            z-index: 1;
-        }
+    /* HERO WITH CANVAS */
+    .hero {
+        position: relative;
+        height: 260px;
+        background: linear-gradient(to bottom right, #1b263b, #415a77);
+        overflow: hidden;
+        transition: background 0.3s;
+    }
 
-        .hero-text {
-            position: relative;
-            z-index: 3;
-            text-align: center;
-            color: white;
-            padding-top: 70px;
-        }
+    #bgCanvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 260px;
+        z-index: 1;
+    }
 
-        .hero-text h1 {
-            font-size: 40px;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
+    .hero-text {
+        position: relative;
+        z-index: 3;
+        text-align: center;
+        color: white;
+        padding-top: 70px;
+        transition: color 0.3s;
+    }
 
-        .hero-text p {
-            font-size: 18px;
-            opacity: 0.9;
-        }
+    .hero-text h1 { font-size: 40px; font-weight: 700; margin-bottom: 6px; }
+    .hero-text p { font-size: 18px; opacity: 0.9; }
 
-        /* UPLOAD CONTAINER */
-        #upload-container {
-            max-width: 650px;
-            margin: 50px auto;
-            background: white;
-            border-radius: 18px;
-            padding: 40px 30px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
-            animation: fadeUp 0.6s ease;
-        }
+    /* UPLOAD CONTAINER */
+    #upload-container {
+        max-width: 650px;
+        margin: 50px auto;
+        background: white;
+        border-radius: 18px;
+        padding: 40px 30px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+        animation: fadeUp 0.6s ease;
+        transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+    }
 
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
+    @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
 
-        .upload-area {
-            border: 2px dashed #2b4b82;
-            padding: 30px;
-            text-align: center;
-            border-radius: 16px;
-            background: #f9fafe;
-            cursor: pointer;
-            transition: 0.3s ease;
-        }
+    .upload-area {
+        border: 2px dashed #2b4b82;
+        padding: 30px;
+        text-align: center;
+        border-radius: 16px;
+        background: #f9fafe;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
 
-        .upload-area:hover {
-            background: #e7eeff;
-            border-color: #4b72b6;
-            box-shadow: 0 0 14px rgba(70,110,180,0.4);
-        }
+    .upload-area:hover {
+        background: #e7eeff;
+        border-color: #4b72b6;
+        box-shadow: 0 0 14px rgba(70,110,180,0.4);
+    }
 
-        input[type="file"] { display: none; }
+    input[type="file"] { display: none; }
 
-        .upload-btn {
-            padding: 14px 28px;
-            margin-top: 22px;
-            background: #2b4b82;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+    .upload-btn {
+        padding: 14px 28px;
+        margin-top: 22px;
+        background: #2b4b82;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
 
-        .upload-btn:hover {
-            background: #1d3560;
-            transform: scale(1.05);
-        }
+    .upload-btn:hover {
+        background: #1d3560;
+        transform: scale(1.05);
+    }
 
-        /* RESULT BOX */
-        #result {
-            margin-top: 35px;
-            background: #f5f7fb;
-            padding: 20px;
-            border-radius: 12px;
-            display: none;
-            animation: fadeUp 0.4s ease;
-        }
+    /* RESULT BOX */
+    #result {
+        margin-top: 35px;
+        background: #f5f7fb;
+        padding: 20px;
+        border-radius: 12px;
+        display: none;
+        animation: fadeUp 0.4s ease;
+        transition: background 0.3s, color 0.3s;
+    }
 
-        #result img {
-            width: 100%;
-            border-radius: 12px;
-            margin-bottom: 12px;
-        }
+    #result img {
+        width: 100%;
+        border-radius: 12px;
+        margin-bottom: 12px;
+    }
 
-        #result h3 {
-            color: #2b4b82;
-        }
+    #result h3 { color: #2b4b82; }
 
-        /* COUNTER SECTION */
-        #species-counter {
-            max-width: 800px;
-            margin: 50px auto;
-            background: white;
-            padding: 25px;
-            border-radius: 16px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
-        }
+    /* COUNTER SECTION */
+    #species-counter {
+        max-width: 800px;
+        margin: 50px auto;
+        background: white;
+        padding: 25px;
+        border-radius: 16px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+        transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+    }
 
-        #species-counter h2 {
-            color: #2b4b82;
-            text-align: center;
-            margin-bottom: 18px;
-        }
+    #species-counter h2 {
+        color: #2b4b82;
+        text-align: center;
+        margin-bottom: 18px;
+    }
 
-        .counter-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px,1fr));
-            gap: 15px;
-        }
+    .counter-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px,1fr));
+        gap: 15px;
+    }
 
-        .counter-card {
-            background: #f9fafe;
-            padding: 12px;
-            border-radius: 12px;
-            text-align: center;
-            transition: 0.3s;
-            cursor: pointer;
-        }
+    .counter-card {
+        background: #f9fafe;
+        padding: 12px;
+        border-radius: 12px;
+        text-align: center;
+        transition: 0.3s;
+        cursor: pointer;
+    }
 
-        .counter-card:hover {
-            background: #e7eeff;
-            transform: translateY(-3px);
-            box-shadow: 0 0 12px rgba(70,110,180,0.3);
-        }
+    .counter-card:hover {
+        background: #e7eeff;
+        transform: translateY(-3px);
+        box-shadow: 0 0 12px rgba(70,110,180,0.3);
+    }
 
-        .counter-card span {
-            font-size: 18px;
-            color: #2b4b82;
-            font-weight: 700;
-        }
-    </style>
+    .counter-card span {
+        font-size: 18px;
+        color: #2b4b82;
+        font-weight: 700;
+    }
+
+    /* ---------------- DARK MODE ---------------- */
+    body.dark { background: #0b0f14; color: #e6e6e6; }
+
+    body.dark nav { background: #0a1525; }
+    body.dark nav ul li a { color: #d0d0d0; }
+    body.dark nav ul li a:hover { background: #102033; }
+    body.dark #darkToggle { background: #102033; color: white; }
+
+    body.dark .hero { background: linear-gradient(to bottom right, #009a1a, #051d39); }
+    body.dark .hero-text { color: #e6e6e6; }
+
+    body.dark #upload-container { background: #051d39; color: #e0e0e0; box-shadow: 0 6px 20px rgba(0,0,0,0.6); }
+    body.dark .upload-area { background: #14202c; border-color: #04991c; }
+    body.dark .upload-btn { background: #04991c; }
+    body.dark .upload-btn:hover { background: #233040; }
+
+    body.dark #result { background: #14202c; color: #e3e3e3; }
+    body.dark #result h3 { color: #04991c; }
+
+    body.dark #species-counter { background: #051d39; color: #e0e0e0; box-shadow: 0 6px 20px rgba(0,0,0,0.6); }
+    body.dark .counter-card { background: #04991c; color: #e0e0e0; }
+    body.dark .counter-card:hover { background: #233040; box-shadow: 0 0 12px rgba(0,0,0,0.4); }
+</style>
 </head>
 
 <body>
@@ -208,6 +243,7 @@
         <li><a href="upload.html">identify</a></li>
         <li><a href="enci.html">encyclopedia</a></li>
         <li><a href="map.html">map</a></li>
+        <li><button id="darkToggle">🌙</button></li>
     </ul>
 </nav>
 
@@ -238,7 +274,6 @@
     <div id="counterGrid" class="counter-grid"></div>
 </div>
 
-<!-- SCRIPT -->
 <script>
 /* ------------------------------
    Particle Canvas Background
@@ -350,12 +385,26 @@ async function uploadImage() {
         <p><b>Uploaded Count:</b> ${data.upload_count}</p>
     `;
 
-    // Update counter
     speciesCounts[data.name]++;
     const key = data.name.replace(/\s+/g, "_");
     document.getElementById("count-" + key).innerText = speciesCounts[data.name];
 }
-</script>
 
+/* ------------------------------
+   Dark Mode Toggle
+--------------------------------*/
+const toggleBtn = document.getElementById("darkToggle");
+
+toggleBtn.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+    toggleBtn.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
+    localStorage.setItem("darkMode", document.body.classList.contains("dark"));
+});
+
+if (localStorage.getItem("darkMode") === "true") {
+    document.body.classList.add("dark");
+    toggleBtn.textContent = "☀️";
+}
+</script>
 </body>
 </html>

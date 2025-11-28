@@ -1,121 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>agent</title>
+<meta charset="UTF-8">
+<title>agent</title>
+<link rel="stylesheet" href="libs/leaflet.css">
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #eef2f3;
+        transition: background 0.3s, color 0.3s;
+        color: #000;
+    }
 
-    <link rel="stylesheet" href="libs/leaflet.css">
+    /* NAVBAR */
+    nav {
+        width: 100%;
+        background: #0d1b2a;
+        padding: 12px 0;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #eef2f3;
-        }
+    nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        padding: 0;
+        margin: 0;
+    }
 
-        nav {
-            width: 100%;
-            background: #0d1b2a;
-            padding: 12px 0;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+    nav ul li a {
+        text-decoration: none;
+        color: #e0e1dd;
+        font-size: 16px;
+        font-weight: 600;
+        padding: 8px 14px;
+        border-radius: 6px;
+        transition: background 0.25s ease, transform 0.15s ease;
+    }
 
-        nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            padding: 0;
-            margin: 0;
-        }
+    nav ul li a:hover {
+        background: #1b263b;
+        color: white;
+        transform: scale(1.05);
+    }
 
-        nav ul li a {
-            text-decoration: none;
-            color: #e0e1dd;
-            font-size: 16px;
-            font-weight: 600;
-            padding: 8px 14px;
-            border-radius: 6px;
-            transition: background 0.25s ease, transform 0.15s ease;
-        }
+    #darkToggle {
+        padding: 6px 12px;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        background:#1b263b;
+        color:white;
+        font-weight:600;
+        transition: 0.25s;
+    }
 
-        nav ul li a:hover {
-            background: #1b263b;
-            color: white;
-            transform: scale(1.05);
-        }
+    #darkToggle:hover {
+        background: #2d3f5c;
+    }
 
-        #container {
-            display: flex;
-            height: calc(100vh - 60px);
-            overflow: hidden;
-        }
+    /* CONTAINER & SIDEBAR */
+    #container {
+        display: flex;
+        height: calc(100vh - 60px);
+        overflow: hidden;
+    }
 
-        #sidebar {
-            width: 340px;
-            overflow-y: auto;
-            background: white;
-            padding: 20px;
-            border-right: 2px solid #ddd;
-        }
+    #sidebar {
+        width: 340px;
+        overflow-y: auto;
+        background: white;
+        padding: 20px;
+        border-right: 2px solid #ddd;
+        transition: background 0.3s, color 0.3s;
+    }
 
-        #speciesList {
-            padding-left: 0;
-            list-style: none;
-        }
+    #speciesList {
+        padding-left: 0;
+        list-style: none;
+    }
 
-        .species-item {
-            padding: 12px;
-            margin-bottom: 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            background: #fafafa;
-            border-left: 5px solid transparent;
-            transition: 0.2s ease;
-        }
+    .species-item {
+        padding: 12px;
+        margin-bottom: 10px;
+        border-radius: 6px;
+        cursor: pointer;
+        background: #fafafa;
+        border-left: 5px solid transparent;
+        transition: 0.2s ease;
+    }
 
-        .species-item:hover {
-            background: #e8f4ff;
-            border-left: 5px solid #4da3ff;
-            transform: scale(1.01);
-        }
+    .species-item:hover {
+        background: #e8f4ff;
+        border-left: 5px solid #4da3ff;
+        transform: scale(1.01);
+    }
 
-        #map { flex: 1; }
+    #map { flex: 1; }
 
-        .leaflet-container {
-            background: #cfe0e8;
-        }
+    .leaflet-container { background: #cfe0e8; transition: background 0.3s; }
 
-        @media (max-width: 600px) {
-            #container { flex-direction: column; }
+    @media (max-width: 600px) {
+        #container { flex-direction: column; }
+        #sidebar { width: 100%; max-height: 0; overflow: hidden; padding: 0 20px; transition: 0.4s ease; }
+        #sidebar.open { max-height: 300px; padding: 20px; }
+        #toggleSidebar { width: 100%; background: #0d1b2a; color: white; padding: 12px; }
+        #map { height: 70vh; }
+    }
 
-            #sidebar {
-                width: 100%;
-                max-height: 0;
-                overflow: hidden;
-                padding: 0 20px;
-                transition: 0.4s ease;
-            }
+    /* ---------------- DARK MODE ---------------- */
+    body.dark {
+        background: #0b0f14;
+        color: #e6e6e6;
+    }
 
-            #sidebar.open {
-                max-height: 300px;
-                padding: 20px;
-            }
+    body.dark nav { background: #0a1525; }
+    body.dark nav ul li a { color: #d0d0d0; }
+    body.dark nav ul li a:hover { background: #102033; }
 
-            #toggleSidebar {
-                width: 100%;
-                background: #0d1b2a;
-                color: white;
-                padding: 12px;
-                border: none;
-            }
+    body.dark #sidebar {
+        background: #051d39;
+        color: #e0e0e0;
+        border-right: 2px solid #2c3643;
+    }
 
-            #map { height: 70vh; }
-        }
-    </style>
+    body.dark .species-item {
+        background: #04991c;
+        color: #e0e0e0;
+        border-left: 5px solid transparent;
+    }
+
+    body.dark .species-item:hover {
+        background: #233040;
+        border-left: 5px solid #4da3ff;
+    }
+
+    body.dark .leaflet-container {
+        background: #0b0f14;
+    }
+</style>
 </head>
 <body>
 
@@ -125,44 +153,53 @@
         <li><a href="upload.html">identify</a></li>
         <li><a href="enci.html">encyclopedia</a></li>
         <li><a href="map.html">map</a></li>
+        <li><button id="darkToggle">🌙</button></li>
     </ul>
 </nav>
 
 <button id="toggleSidebar" style="display:none;">Show Species List</button>
 
 <div id="container">
-
     <div id="sidebar">
         <h2>Wildlife Species (India)</h2>
         <ul id="speciesList"></ul>
     </div>
-
     <div id="map"></div>
 </div>
 
-
 <script src="libs/leaflet.js"></script>
 <script>
+/* ---------------- DARK MODE TOGGLE JS ---------------- */
+const toggleBtn = document.getElementById("darkToggle");
+
+toggleBtn.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+    toggleBtn.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
+    localStorage.setItem("darkMode", document.body.classList.contains("dark"));
+});
+
+// Load saved mode
+if (localStorage.getItem("darkMode") === "true") {
+    document.body.classList.add("dark");
+    toggleBtn.textContent = "☀️";
+}
+
 /* -----------------------------------------------
    MOBILE SIDEBAR
 -------------------------------------------------- */
 const sidebar = document.getElementById("sidebar");
-const toggleBtn = document.getElementById("toggleSidebar");
+const toggleSidebarBtn = document.getElementById("toggleSidebar");
 
 function checkMobile() {
-    if (window.innerWidth <= 600) {
-        toggleBtn.style.display = "block";
-    } else {
-        toggleBtn.style.display = "none";
-        sidebar.classList.remove("open");
-    }
+    if (window.innerWidth <= 600) toggleSidebarBtn.style.display = "block";
+    else { toggleSidebarBtn.style.display = "none"; sidebar.classList.remove("open"); }
 }
 checkMobile();
 window.onresize = checkMobile;
 
-toggleBtn.onclick = () => {
+toggleSidebarBtn.onclick = () => {
     sidebar.classList.toggle("open");
-    toggleBtn.textContent = sidebar.classList.contains("open")
+    toggleSidebarBtn.textContent = sidebar.classList.contains("open")
         ? "Hide Species List"
         : "Show Species List";
 };
@@ -171,9 +208,7 @@ toggleBtn.onclick = () => {
    MAP INITIALIZATION
 -------------------------------------------------- */
 let map = L.map("map").setView([22.5, 79], 5);
-
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
-
 let currentLayer = null;
 
 /* -----------------------------------------------
@@ -183,23 +218,18 @@ fetch("static/data/species.json")
     .then(res => res.json())
     .then(data => {
         const list = document.getElementById("speciesList");
-
         data.forEach(animal => {
             const li = document.createElement("li");
             li.classList.add("species-item");
             li.textContent = animal.name;
 
-            li.addEventListener("mouseenter", () => {
-                highlightRegion(animal.habitat);
-            });
-
+            li.addEventListener("mouseenter", () => highlightRegion(animal.habitat));
             li.addEventListener("mouseleave", resetMap);
 
             list.appendChild(li);
         });
     })
     .catch(err => console.error("❌ Could not load species.json", err));
-
 
 /* -----------------------------------------------
    BLUR GLOW HABITAT CIRCLE
@@ -210,14 +240,11 @@ function highlightRegion(habitat) {
     fetch(`static/geojson/${habitat}.geojson`)
         .then(res => res.json())
         .then(geo => {
-
             if (currentLayer) map.removeLayer(currentLayer);
 
-            // get polygon center
             const layer = L.geoJSON(geo);
             const center = layer.getBounds().getCenter();
 
-            // blurred glow effect using two circles
             const outerGlow = L.circle(center, {
                 radius: 160000,
                 color: "#ff3333",
@@ -235,7 +262,6 @@ function highlightRegion(habitat) {
             });
 
             currentLayer = L.layerGroup([outerGlow, innerGlow]).addTo(map);
-
             map.setView(center, 6);
         })
         .catch(err => console.error("❌ GeoJSON not found:", habitat));
@@ -245,10 +271,7 @@ function highlightRegion(habitat) {
    RESET MAP
 -------------------------------------------------- */
 function resetMap() {
-    if (currentLayer) {
-        map.removeLayer(currentLayer);
-        currentLayer = null;
-    }
+    if (currentLayer) { map.removeLayer(currentLayer); currentLayer = null; }
 }
 </script>
 

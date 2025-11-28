@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cruselia</title>
+    <title>Faunex</title>
 
     <style>
         body {
@@ -30,6 +30,7 @@
             gap: 30px;
             margin: 0;
             padding: 0;
+            align-items: center;
         }
 
         nav ul li a {
@@ -45,6 +46,22 @@
         nav ul li a:hover {
             background: #1b263b;
             transform: scale(1.05);
+        }
+
+        /* Dark mode button in navbar */
+        #darkToggle {
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            background:#1b263b;
+            color:white;
+            font-weight:600;
+            transition: 0.25s;
+        }
+
+        #darkToggle:hover {
+            background: #2d3f5c;
         }
 
         /* HERO SECTION */
@@ -233,9 +250,54 @@
             color: #4da3ff;
             text-decoration: none;
         }
+
+        /* ---------------- DARK MODE (ADDED WITHOUT CHANGING ANY EXISTING CODE) ---------------- */
+        body.dark {
+            background: #0b0f14;
+            color: #e6e6e6;
+        }
+
+        body.dark nav { background: #0a1525; }
+        body.dark nav ul li a { color: #d0d0d0; }
+        body.dark nav ul li a:hover { background: #102033; }
+
+        body.dark .hero-wrap {
+            background: linear-gradient(to bottom right, #009a1a, #051d39);
+        }
+
+        body.dark #home-container {
+            background: #051d39;
+            color: #e0e0e0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+        }
+
+        body.dark .section-title { color: #cfd8e3; }
+
+        body.dark .feature {
+            background: #04991c;
+            border: 1px solid #2c3643;
+        }
+
+        body.dark .feature:hover { background: #233040; }
+
+        body.dark .get-started-btn {
+            background: #04991c;
+        }
+
+        body.dark footer { background: #0a1525; }
+        body.dark footer a { color: #6cb8ff; }
+
+        body.dark .modal {
+            background: #14202c;
+            color: #e3e3e3;
+        }
+
+        body.dark .btn-ghost {
+            background: #203043;
+            color: white;
+        }
     </style>
 </head>
-
 
 <body>
 
@@ -246,6 +308,7 @@
         <li><a href="upload.html">identify</a></li>
         <li><a href="enci.html">encyclopedia</a></li>
         <li><a href="map.html">map</a></li>
+        <li><button id="darkToggle">🌙</button></li>
     </ul>
 </nav>
 
@@ -254,14 +317,14 @@
     <canvas id="bgCanvas"></canvas>
 
     <div class="hero-content">
-        <h1>Welcome to Cruselia</h1>
+        <h1>Welcome to Faunex</h1>
         <p>AI-powered wildlife intelligence for forest departments and conservation teams.</p>
     </div>
 </div>
 
 <!-- HOME CONTENT -->
 <div id="home-container">
-    <p>Cruselia is an AI-powered wildlife monitoring tool designed to assist forest officials,
+    <p>Faunex is an AI-powered wildlife monitoring tool designed to assist forest officials,
         researchers, and conservationists. It provides real-time insights into animal populations and
         conservation status across different regions.</p>
 
@@ -301,7 +364,7 @@
 
 <!-- FOOTER -->
 <footer>
-    Contact: <a href="mailto:hello@cruselia.com">hello@cruselia.com</a> | © 2025 Cruselia
+    Contact: <a href="mailto:hello@cFaunex.com">hello@Faunex.com</a> | © 2025 Faunex
 </footer>
 
 <!-- FAB -->
@@ -418,6 +481,24 @@ modal.addEventListener("click", (e) => {
 document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") modal.classList.remove("show");
 });
+
+/* ------ DARK MODE TOGGLE JS ------ */
+const toggleBtn = document.getElementById("darkToggle");
+
+toggleBtn.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+
+    toggleBtn.textContent =
+        document.body.classList.contains("dark") ? "☀️" : "🌙";
+
+    localStorage.setItem("darkMode", document.body.classList.contains("dark"));
+});
+
+// Load saved mode
+if (localStorage.getItem("darkMode") === "true") {
+    document.body.classList.add("dark");
+    toggleBtn.textContent = "☀️";
+}
 </script>
 
 </body>
